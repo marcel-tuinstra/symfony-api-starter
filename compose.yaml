@@ -1,0 +1,93 @@
+version: "3.9"
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: symfony_php
+    volumes:
+      - .:/var/www/html:cached
+    depends_on:
+      - db
+      - mailpit
+    environment:
+      APP_ENV: dev
+      APP_SECRET: ${APP_SECRET:-dev-secret}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://symfony:symfony@db:5432/symfony?serverVersion=15&charset=utf8}
+      MAILER_DSN: ${MAILER_DSN:-smtp://mailpit:1025}
+      CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-http://localhost:3000}
+#    ports:
+#      - "8080:80"
+    expose:
+      - "9000"
+    healthcheck:
+      test: ["CMD-SHELL", "php -v"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  db:
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    container_name: symfony_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-symfony}
+      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-symfony}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "symfony"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: symfony_mailpit
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "1025"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: symfony_keycloak
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+#      KC_DB: dev-mem
+      KC_HTTP_PORT: 8081
+      KC_HTTPS_PORT: 8443
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./docker/keycloak:/opt/keycloak/data/import
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: symfony_caddy
+    depends_on:
+      - php
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html:ro
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+
+volumes:
+  db_data:

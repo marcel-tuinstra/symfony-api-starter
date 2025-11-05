@@ -10,15 +10,15 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ### **v0.0.1 — Foundation Build**
 **Goal:** Bootstrapped, minimal, working baseline.
 
-- [ ] Symfony 7 + API Platform 4
-- [ ] Keycloak OIDC authentication (JWT)
-- [ ] Single `User` ApiResource
-- [ ] FakerPHP-based fixtures
-- [ ] PHPStan level 6, Rector, EasyCodingStandard
-- [ ] GrumPHP pre-commit hook
-- [ ] Factory autowiring pattern via `supports()`
-- [ ] Docker Compose stack (PHP, PostgreSQL, Keycloak, Mailpit)
-- [ ] `.env.dist` with required variables
+- [x] Symfony 7 + API Platform 4
+- [x] Keycloak OIDC authentication (JWT)
+- [x] Single `User` ApiResource
+- [x] FakerPHP-based fixtures
+- [x] PHPStan level 6, Rector, EasyCodingStandard
+- [x] GrumPHP pre-commit hook
+- [x] Factory autowiring pattern via `supports()`
+- [x] Docker Compose stack (PHP, PostgreSQL, Keycloak, Mailpit)
+- [x] `.env.dist` with required variables
 
 ---
 

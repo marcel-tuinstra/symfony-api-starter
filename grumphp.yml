@@ -1,0 +1,9 @@
+parameters:
+    git_hook_variables:
+        EXEC_GRUMPHP_COMMAND: 'docker compose exec php'
+    tasks:
+        phpstan:
+            configuration: phpstan.neon
+            level: 6
+        ecs:
+            config: ecs.php

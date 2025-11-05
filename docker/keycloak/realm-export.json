@@ -1,0 +1,34 @@
+{
+    "realm": "symfony",
+    "enabled": true,
+    "clients": [
+        {
+            "clientId": "symfony-api",
+            "rootUrl": "http://localhost:8080",
+            "redirectUris": ["http://localhost:8080/*"],
+            "publicClient": true,
+            "standardFlowEnabled": true,
+            "protocol": "openid-connect"
+        }
+    ],
+    "roles": {
+        "realm": [
+            { "name": "ROLE_USER" },
+            { "name": "ROLE_ADMIN" }
+        ]
+    },
+    "users": [
+        {
+            "username": "admin",
+            "enabled": true,
+            "emailVerified": true,
+            "firstName": "Admin",
+            "lastName": "User",
+            "email": "admin@example.com",
+            "credentials": [
+                { "type": "password", "value": "admin", "temporary": false }
+            ],
+            "realmRoles": ["ROLE_ADMIN"]
+        }
+    ]
+}
