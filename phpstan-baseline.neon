@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Property App\\Entity\\User\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
-			identifier: property.unusedType
+			message: '#^Property App\\Entity\\User\:\:\$id is never written, only read\.$#'
+			identifier: property.onlyRead
 			count: 1
-			path: src/Entity/User.php
+			path: src/App/Entity/User.php

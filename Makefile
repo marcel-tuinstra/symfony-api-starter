@@ -34,9 +34,20 @@ lint:
 	docker compose exec php vendor/bin/ecs check src
 	docker compose exec php vendor/bin/rector process --dry-run
 
+xdebug-on:
+	docker compose exec php sh -c 'echo "xdebug.mode=debug" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 1'
+	@echo "✅ Xdebug enabled (mode=debug)"
+
+xdebug-off:
+	docker compose exec php sh -c 'echo "xdebug.mode=off" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 1'
+	@echo "🧹 Xdebug disabled"
+
 fix:
 	docker compose exec php vendor/bin/ecs check src --fix
 	docker compose exec php vendor/bin/rector process
+
+baseline:
+	docker compose exec php vendor/bin/phpstan -b
 
 analyse:
 	docker compose exec php vendor/bin/phpstan analyse --memory-limit=1G

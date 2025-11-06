@@ -15,43 +15,58 @@ The philosophy centers on delivering a clean, extensible architecture that suppo
 
 ---
 
-## Features ✨
+## Features
 
-- **API Platform**: Fully-featured REST and GraphQL APIs with built-in validation and serialization.
-- **Keycloak Integration**: Secure, standards-compliant authentication and authorization.
-- **Sentry**: Real-time error tracking and monitoring.
-- **Faker**: Generate realistic test data effortlessly.
-- **GrumPHP**: Automated quality checks and pre-commit hooks to enforce code standards.
-- **Dockerized Development**: Easy setup with Docker Compose for consistent environments.
-- **Comprehensive Testing**: PHPUnit and integration tests with coverage reports.
+- **Symfony 7 + API Platform 4**: Clean, modern foundation for RESTful and GraphQL APIs.
+- **Keycloak OIDC Authentication (JWT)**: Secure and standards-compliant authentication.
+- **UUID Primary Keys**: Consistent, collision-resistant entity IDs via `ramsey/uuid-doctrine`.
+- **Enum-Based Roles**: Standardized authorization using `Role::USER`, `Role::ADMIN`.
+- **FakerPHP Fixtures**: Quick and reliable seeding of realistic data for development.
+- **Developer Tooling**: PHPStan (Level 6), Rector, EasyCodingStandard, GrumPHP pre-commit hooks.
+- **Serialization Groups**: Standardized `<entity>:read` and `<entity>:write` patterns for clarity.
+- **Dockerized Stack**: Full local setup including PHP, PostgreSQL, Keycloak, and Mailpit.
+- **Makefile Commands**: Streamlined workflow (`up`, `down`, `lint`, `test`, `fixtures`).
+- **Composer Scripts**: Unified linting, analysis, and testing shortcuts.
+- **Xdebug + Symfony CLI**: Frictionless DX for debugging and local inspection.
+- **CORS Configuration**: NelmioCorsBundle configured for `localhost:3000` (frontend ready).
 
 ---
 
-## Architecture Overview 🏗️
+## Architecture Overview
 
 This project follows a modular, layered architecture emphasizing separation of concerns and testability. For detailed insights and diagrams, please see the [Architecture Documentation](docs/architecture.md).
 
 ---
 
-## Quick Start ⚡
+## Quick Start
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/marcel-tuinstra/symfony-api-starter.git
 cd symfony-api-starter
 
-# Start services with Docker Compose
+# 2. Copy environment configuration
+cp .env.dist .env
+
+# 3. Start the full Docker stack (PHP, Postgres, Keycloak, Mailpit)
 make up
 
-# Run database migrations
-make migrate
-
-# Load development fixtures
+# 4. Initialize the database schema and load fixtures
 make fixtures
 
-# Open the documentation in your browser
-make docs
+# 5. Run the test suite to verify setup
+make test
+
+# 6. Access the API documentation
+open http://localhost:8080/api/docs
 ```
+
+**Tips**
+- Stop all containers: `make down`
+- Run static analysis: `make lint`
+- Auto-fix code style: `make fix`
+- Toggle Xdebug on/off: `make xon` / `make xoff`
+- View Symfony environment info: `make info`
 
 ---
 
@@ -66,18 +81,18 @@ Explore detailed guides and references:
 
 ---
 
-## Contributing 🤝
+## Contributing
 
 We welcome contributions! Please review our [Contributing Guidelines](docs/contributing.md) before submitting issues or pull requests.
 
 ---
 
-## License 📄
+## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Author ✍️
+## Author
 
 Marcel Tuinstra — [GitHub Profile](https://github.com/marceltuinstra) — [Web](https://marcel.tuinstra.dev)

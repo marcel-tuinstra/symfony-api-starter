@@ -25,13 +25,13 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ### **v0.0.2 — Developer Experience**
 **Goal:** Frictionless DX and consistent coding conventions.
 
-- [ ] Symfony CLI + Xdebug toggle in Docker
-- [ ] Makefile commands (`up`, `down`, `lint`, `test`, `fixtures`)
-- [ ] Composer scripts for linting & analysis
-- [ ] NelmioCorsBundle configured for `localhost:3000`
-- [ ] UUID primary keys via `ramsey/uuid-doctrine`
-- [ ] Enum-based roles (`Role::USER`, `Role::ADMIN`)
-- [ ] Standardized serialization groups (`<entity>:read`, etc.)
+- [x] Symfony CLI + Xdebug toggle in Docker
+- [x] Makefile commands (`up`, `down`, `lint`, `test`, `fixtures`)
+- [x] Composer scripts for linting & analysis
+- [x] NelmioCorsBundle configured for `localhost:3000`
+- [x] UUID primary keys via `ramsey/uuid-doctrine`
+- [x] Enum-based roles (`Role::USER`, `Role::ADMIN`)
+- [x] Standardized serialization groups (`<entity>:read`, etc.)
 
 ---
 
