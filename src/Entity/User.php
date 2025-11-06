@@ -12,6 +12,7 @@ use App\Enum\User\Role;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -33,9 +34,7 @@ class User
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private Uuid $id;
+    private UuidInterface $id;
 
     #[Groups(['user:read', 'user:write'])]
     #[ORM\Column(length: 180, unique: true)]
@@ -47,13 +46,13 @@ class User
     #[ORM\Column(type: 'json')]
     private array $roles = [Role::USER->value];
 
-    public function __construct(
-        string $email
-    ) {
+    public function __construct(string $email)
+    {
+        $this->id = Uuid::uuid4();
         $this->email = $email;
     }
 
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

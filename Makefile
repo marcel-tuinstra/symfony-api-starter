@@ -10,6 +10,12 @@ logs:
 db-create:
 	docker compose exec php php bin/console doctrine:database:create --if-not-exists
 
+db-drop:
+	docker compose exec php php bin/console doctrine:database:drop --force
+
+migrate-diff:
+	docker compose exec php php bin/console doctrine:migrations:diff
+
 migrate:
 	docker compose exec php php bin/console doctrine:migrations:migrate --no-interaction
 

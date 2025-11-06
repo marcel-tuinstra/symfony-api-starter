@@ -38,7 +38,8 @@
             "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true,
-            "phpro/grumphp": true
+            "phpro/grumphp": true,
+            "optimize-autoloader": true
         },
         "bump-after-update": true,
         "sort-packages": true
