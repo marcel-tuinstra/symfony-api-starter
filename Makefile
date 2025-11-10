@@ -73,3 +73,10 @@ php-log:
 clean:
 	docker compose exec php rm -rf var/cache/*
 	docker compose exec php rm -rf vendor/composer/installed.json
+
+keycloak-refresh:
+	curl -s http://localhost:8081/realms/symfony/protocol/openid-connect/certs \
+	| jq -r '.keys[0].x5c[0]' \
+	| awk '{print "-----BEGIN CERTIFICATE-----\n" $$0 "\n-----END CERTIFICATE-----"}' \
+	> config/jwt/keycloak_public.pem
+	@echo "✅ Updated public key from Keycloak JWKS"

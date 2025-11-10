@@ -35,29 +35,29 @@ Built for developer velocity, code quality, and modern SaaS backends.
 
 ---
 
-### **v0.0.3 — Observability & Logging**
-**Goal:** Full visibility into runtime behaviour.
+### **v0.0.3 — Authentication & Secure CRUD**
+**Goal:** Enable authenticated, role-based API access with full CRUD on User.
+
+- [x] Keycloak JWT integration (`lexik/jwt-authentication-bundle` or OIDC introspection)
+- [x] Secure API routes via `security.yaml` (e.g. disable anonymous writes)
+- [x] Enable `POST`, `PUT`, `DELETE` for `User` (with `is_granted('ROLE_ADMIN')`)
+- [x] Admin + regular user fixtures for testing
+- [x] Updated API docs showing secured endpoints
+- [x] README update with token usage and realm setup
+
+---
+
+### **v0.0.4 — Observability, Filtering & Environment Maturity**
+**Goal:** Full visibility into runtime behaviour and robust, production-like configuration.
 
 - [ ] Sentry integration (`sentry/sentry-symfony`)
 - [ ] JSON Monolog logging + daily rotation
 - [ ] Global exception → Problem+ JSON mapper
 - [ ] Context-aware logging trait for Processors
-
----
-
-### **v0.0.4 — Filtering & Pagination**
-**Goal:** Queryable, flexible APIs.
-
 - [ ] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
-- [ ] Pagination defaults (25 / 100 max)
+- [ ] Pagination defaults (25 $/ 100 max)
 - [ ] Optional `#[MapQueryString]` usage for lightweight filtering
 - [ ] Example `QueryFilterTrait`
-
----
-
-### **v0.0.5 — Environment Maturity**
-**Goal:** Predictable, safe, portable builds.
-
 - [ ] Split config profiles (`dev`, `prod`, `test`)
 - [ ] Optimized Dockerfile with Opcache
 - [ ] `.env.dist` + `.env.test` examples
@@ -68,32 +68,20 @@ Built for developer velocity, code quality, and modern SaaS backends.
 
 ---
 
-### **v0.0.6 — Testing Discipline**
-**Goal:** Maintain 70 %+ coverage with clear test layering.
+### **v0.0.5 — Testing, CI/CD & Documentation**
+**Goal:** High confidence, automated delivery, and clear developer onboarding.
 
 - [ ] PHPUnit + ApiPlatform `ApiTestCase`
 - [ ] `FunctionalTestCase` base class
+- [ ] Functional tests for authentication & authorization
 - [ ] Unit / Integration / Functional split
 - [ ] Coverage enforcement in CI
 - [ ] Faker fixtures loaded for integration tests
-
----
-
-### **v0.0.7 — CI/CD Automation**
-**Goal:** Continuous confidence & deployment.
-
-- [ ] GitHub Actions workflow (`ci.yml`)
 - [ ] PHPStan, Rector, ECS, PHPUnit steps
-- [ ] Coverage artifact upload
-- [ ] Auto-deploy `develop` → staging via SSH
-- [ ] Secrets: `DEPLOY_HOST`, `DEPLOY_PATH`, `DEPLOY_KEY`
-- [ ] Optional Slack/Discord notifications
-
----
-
-### **v0.0.8 — Documentation & Onboarding**
-**Goal:** Self-explanatory developer experience.
-
+- [ ] Full type coverage (no `mixed`)
+- [ ] Doctrine migrations test
+- [ ] Healthcheck endpoint `/health`
+- [ ] Docker healthchecks
 - [ ] `/docs` folder with architecture, CI/CD, testing guides
 - [ ] Auto-generated OpenAPI spec `/docs/openapi.json`
 - [ ] README badges (CI, PHPStan, Coverage)
@@ -101,14 +89,13 @@ Built for developer velocity, code quality, and modern SaaS backends.
 
 ---
 
-### **v0.0.9 — Pre-Release Hardening**
-**Goal:** Ship-quality baseline.
+### **v0.0.6 — CI/CD & Deployment**
+**Goal:** Continuous integration and deployment pipeline for automated builds, testing, and staging delivery.
 
-- [ ] Full type coverage (no `mixed`)
-- [ ] Doctrine migrations test
-- [ ] Healthcheck endpoint `/health`
-- [ ] Docker healthchecks
-- [ ] Blackfire / perf profile (optional)
+- [ ] GitHub Actions workflow (`ci.yml`)
+- [ ] Coverage artifact upload
+- [ ] Auto-deploy `develop` → staging via SSH
+- [ ] Secrets: `DEPLOY_HOST`, `DEPLOY_PATH`, `DEPLOY_KEY`
 
 ---
 

@@ -15,6 +15,10 @@ class UserFixtures extends Fixture
     {
         $generator = Factory::create();
 
+        $admin = new User($generator->unique()->safeEmail());
+        $admin->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
+
         for ($i = 0; $i < 10; $i++) {
             $user = new User($generator->unique()->safeEmail());
             $user->setRoles(['ROLE_USER']);

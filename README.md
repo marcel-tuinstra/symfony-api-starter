@@ -46,13 +46,18 @@ git clone https://github.com/marcel-tuinstra/symfony-api-starter.git
 cd symfony-api-starter
 
 # 2. Copy environment configuration
-cp .env.dist .env
+cp .env.dist .env.local
+
 
 # 3. Start the full Docker stack (PHP, Postgres, Keycloak, Mailpit)
 make up
 
 # 4. Initialize the database schema and load fixtures
 make fixtures
+
+# 5 Sync Keycloak public key
+# Automatically fetch the active RS256 key from Keycloak’s JWKS endpoint and update config/jwt/keycloak_public.pem
+make keycloak-refresh
 
 # 5. Run the test suite to verify setup
 make test
@@ -67,6 +72,90 @@ open http://localhost:8080/api/docs
 - Auto-fix code style: `make fix`
 - Toggle Xdebug on/off: `make xon` / `make xoff`
 - View Symfony environment info: `make info`
+
+---
+
+## API Overview
+
+The API uses Keycloak JWT authentication. All routes require a valid Bearer token in the `Authorization` header.
+
+### Obtaining a Token
+
+You can obtain a token from Keycloak using the client credentials grant type. Example `curl` command:
+
+```bash
+curl --location --request POST 'http://localhost:8081/realms/your-realm/protocol/openid-connect/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=your-client-id' \
+--data-urlencode 'client_secret=your-client-secret' \
+--data-urlencode 'grant_type=client_credentials'
+```
+
+The response will contain an `access_token` which you should include in your API requests:
+
+```
+Authorization: Bearer <access_token>
+```
+
+### User Resource Endpoints
+
+| HTTP Method | Path               | Required Role | Description                  |
+|-------------|--------------------|---------------|------------------------------|
+| GET         | `/api/users`       | `Role::ADMIN` | List all users               |
+| GET         | `/api/users/{id}`  | `Role::USER`  | Retrieve user details        |
+| POST        | `/api/users`       | `Role::ADMIN` | Create a new user            |
+| PUT         | `/api/users/{id}`  | `Role::ADMIN` | Update an existing user      |
+| DELETE      | `/api/users/{id}`  | `Role::ADMIN` | Soft delete a user           |
+
+### Example Requests and Responses
+
+#### GET /api/users/{id}
+
+**Request:**
+
+```http
+GET /api/users/123e4567-e89b-12d3-a456-426614174000 HTTP/1.1
+Authorization: Bearer <access_token>
+Accept: application/json
+```
+
+**Response:**
+
+```json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "username": "johndoe",
+  "email": "johndoe@example.com",
+  "roles": ["ROLE_USER"],
+  "createdAt": "2024-01-01T12:00:00+00:00",
+  "updatedAt": "2024-06-01T15:30:00+00:00"
+}
+```
+
+#### DELETE /api/users/{id}
+
+**Request:**
+
+```http
+DELETE /api/users/123e4567-e89b-12d3-a456-426614174000 HTTP/1.1
+Authorization: Bearer <access_token>
+```
+
+**Response:**
+
+```json
+{
+  "message": "User has been soft deleted."
+}
+```
+
+### Soft Delete Explanation
+
+The DELETE operation does not permanently remove the user from the database. Instead, it marks the user as deleted (soft delete), preserving data integrity and allowing for potential recovery or auditing.
+
+---
+
+For full API documentation, visit [http://localhost:8080/api/docs](http://localhost:8080/api/docs).
 
 ---
 

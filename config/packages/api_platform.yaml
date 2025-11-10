@@ -1,7 +1,20 @@
 api_platform:
     title: Hello API Platform
     version: 1.0.0
+    openapi:
+        swagger_ui_extra_configuration:
+            persistAuthorization: true
+
+    formats:
+        json: ['application/json']
+        jsonld: ['application/ld+json']
+
     defaults:
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+        pagination_client_enabled: true
+        pagination_items_per_page: 10
+        pagination_client_items_per_page: true
+        normalization_context:
+            groups: ['user:read']
