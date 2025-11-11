@@ -1,0 +1,50 @@
+{% extends '@!ApiPlatform/SwaggerUi/index.html.twig' %}
+
+{% block head_javascript %}
+    {{ parent() }}
+    <script>
+        window.addEventListener('load', function () {
+            const interval = setInterval(() => {
+                const authWrapper = document.querySelector('.auth-wrapper');
+                if (!authWrapper) return;
+
+                const loginButton = document.createElement('button');
+                loginButton.textContent = 'Get token from Keycloak';
+                loginButton.classList.add('btn');
+
+                loginButton.addEventListener('click', async function () {
+                    try {
+                        const response = await fetch(
+                            '{{ keycloak.url }}/realms/{{ keycloak.realm }}/protocol/openid-connect/token',
+                            {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({
+                                    client_id: '{{ keycloak.client_id }}',
+                                    client_secret: '{{ keycloak.client_secret }}',
+                                    grant_type: 'client_credentials',
+                                }),
+                            }
+                        );
+
+                        const data = await response.json();
+                        if (!response.ok) {
+                            console.error('Keycloak error', data);
+                            alert(data.error_description || 'Failed to get token');
+                            return;
+                        }
+
+                        const token = data.access_token;
+                        await navigator.clipboard.writeText(token);
+                    } catch (e) {
+                        console.error('Unexpected error', e);
+                        alert('Could not contact Keycloak');
+                    }
+                });
+
+                authWrapper.insertAdjacentElement('beforebegin', loginButton);
+                clearInterval(interval);
+            }, 500);
+        });
+    </script>
+{% endblock %}

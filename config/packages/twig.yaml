@@ -1,5 +1,11 @@
 twig:
     file_name_pattern: '*.twig'
+    globals:
+        keycloak:
+            url: '%env(KEYCLOAK_WEB_URL)%'
+            realm: '%env(KEYCLOAK_REALM)%'
+            client_id: '%env(KEYCLOAK_CLIENT_ID)%'
+            client_secret: '%env(KEYCLOAK_CLIENT_SECRET)%'
 
 when@test:
     twig:
