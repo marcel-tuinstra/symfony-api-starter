@@ -31,5 +31,13 @@ services:
         decorates: 'api_platform.openapi.factory'
         arguments: [ '@App\OpenApi\OpenApiFactory.inner' ]
 
+    Sentry\SentryBundle\Monolog\LogsHandler:
+        arguments:
+            - !php/const Monolog\Logger::INFO
+
+    Sentry\Monolog\Handler:
+        arguments:
+            $level: !php/const Monolog\Logger::ERROR
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

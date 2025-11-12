@@ -50,9 +50,9 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ### **v0.0.4 — Observability, Filtering & Environment Maturity**
 **Goal:** Full visibility into runtime behaviour and robust, production-like configuration.
 
-- [ ] Sentry integration (`sentry/sentry-symfony`)
-- [ ] JSON Monolog logging + daily rotation
-- [ ] Global exception → Problem+ JSON mapper
+- [x] Sentry integration (`sentry/sentry-symfony`)
+- [x] JSON Monolog logging + daily rotation
+- [x] Global exception → Problem+ JSON mapper
 - [ ] Context-aware logging trait for Processors
 - [ ] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
 - [ ] Pagination defaults (25 $/ 100 max)
