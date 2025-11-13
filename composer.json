@@ -1,4 +1,6 @@
 {
+    "name": "marcel/symfony-api-starter",
+    "description": "Internal Symfony API starter template",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
