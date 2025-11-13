@@ -53,14 +53,14 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [x] Sentry integration (`sentry/sentry-symfony`)
 - [x] JSON Monolog logging + daily rotation
 - [x] Global exception → Problem+ JSON mapper
-- [ ] Context-aware logging trait for Processors
+- [ ] ~~Context-aware logging trait for Processors~~
 - [ ] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
 - [ ] Pagination defaults (25 $/ 100 max)
 - [ ] Optional `#[MapQueryString]` usage for lightweight filtering
 - [ ] Example `QueryFilterTrait`
-- [ ] Split config profiles (`dev`, `prod`, `test`)
-- [ ] Optimized Dockerfile with Opcache
-- [ ] `.env.dist` + `.env.test` examples
+- [x] Split config profiles (`dev`, `prod`, `test`)
+- [x] Optimized Dockerfile with Opcache
+- [x] `.env.dist` + `.env.test` examples
 - [ ] Env variable validation
 - [ ] Rate limiting (`symfony/rate-limiter`)
 - [ ] Security headers & CORS hardening

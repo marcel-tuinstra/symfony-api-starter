@@ -11,7 +11,7 @@ db-create:
 	docker compose exec php php bin/console doctrine:database:create --if-not-exists
 
 db-drop:
-	docker compose exec php php bin/console doctrine:database:drop --force
+	docker compose exec php php bin/console doctrine:database:drop --if-exists --force
 
 migrate-diff:
 	docker compose exec php php bin/console doctrine:migrations:diff
@@ -23,7 +23,7 @@ fixtures:
 	docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
 
 prepare-test-db:
-	docker compose exec php php bin/console doctrine:database:drop --force --env=test
+	docker compose exec php php bin/console doctrine:database:drop --if-exists --force --env=test
 	docker compose exec php php bin/console doctrine:database:create --if-not-exists --env=test
 	docker compose exec php php bin/console doctrine:schema:create --env=test --no-interaction
 	#docker compose exec php php bin/console doctrine:migrations:migrate --env=test --no-interaction

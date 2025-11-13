@@ -6,8 +6,11 @@ services:
       context: .
       dockerfile: ./docker/php/Dockerfile
     container_name: symfony_php
+    tty: true
+    stdin_open: true
     volumes:
       - .:/var/www/html:cached
+      - composer_cache:/tmp/composer
     depends_on:
       - db
       - mailpit
@@ -17,6 +20,8 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://symfony:symfony@db:5432/symfony?serverVersion=15&charset=utf8}
       MAILER_DSN: ${MAILER_DSN:-smtp://mailpit:1025}
       CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-http://localhost:3000}
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:8080}
+      APP_VERSION: ${APP_VERSION:-dev}
 #    ports:
 #      - "8080:80"
     expose:
@@ -101,9 +106,15 @@ services:
       - php
     ports:
       - "8080:80"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
     volumes:
       - .:/var/www/html:ro
       - ./docker/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
   db_data:
+  composer_cache:
