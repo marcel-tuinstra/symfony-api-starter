@@ -16,5 +16,9 @@ api_platform:
         pagination_client_enabled: true
         pagination_items_per_page: 10
         pagination_client_items_per_page: true
+        filters:
+            search: 'api_platform.doctrine.orm.search_filter'
+            order: 'api_platform.doctrine.orm.order_filter'
+            boolean: 'api_platform.doctrine.orm.boolean_filter'
         normalization_context:
             groups: ['user:read']

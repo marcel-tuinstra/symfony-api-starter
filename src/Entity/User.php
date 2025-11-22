@@ -10,6 +10,9 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use App\ApiResource\UserResource;
 use App\Entity\Interface\IdentifiableInterface;
 use App\Entity\Interface\TimestampableInterface;
@@ -41,6 +44,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
     output: UserResource::class,
     provider: UserResourceProvider::class
 )]
+#[ApiFilter(SearchFilter::class, properties: [
+    'email' => 'ipartial',
+    'roles' => 'partial',
+])]
+#[ApiFilter(OrderFilter::class, properties: ['email', 'createdAt'], arguments: ['orderParameterName' => 'order'])]
 class User implements UserInterface, JWTUserInterface, IdentifiableInterface, TimestampableInterface
 {
     use IdentifiableTrait;

@@ -61,10 +61,10 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [x] Split config profiles (`dev`, `prod`, `test`)
 - [x] Optimized Dockerfile with Opcache
 - [x] `.env.dist` + `.env.test` examples
-- [ ] Env variable validation
-- [ ] Rate limiting (`symfony/rate-limiter`)
-- [ ] Security headers & CORS hardening
-- [ ] API version prefix `/api/v1/*`
+- [ ] ~~Env variable validation~~
+- [x] Rate limiting (`symfony/rate-limiter`)
+- [ ] ~~Security headers & CORS hardening~~
+- [ ] ~~API version prefix `/api/v1/*`~~
 
 ---
 
