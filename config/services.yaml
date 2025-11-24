@@ -31,6 +31,19 @@ services:
         decorates: 'api_platform.openapi.factory'
         arguments: [ '@App\OpenApi\OpenApiFactory.inner' ]
 
+    App\Security\KeycloakAuthenticator:
+        arguments:
+            $introspectionUrl: '%env(KEYCLOAK_INTROSPECTION_URL)%'
+            $clientId: '%env(KEYCLOAK_CLIENT_ID)%'
+            $clientSecret: '%env(KEYCLOAK_CLIENT_SECRET)%'
+
+    App\Service\KeycloakService:
+        arguments:
+            $keycloakBaseUrl: '%env(KEYCLOAK_BASE_URL)%'
+            $keycloakRealm: '%env(KEYCLOAK_REALM)%'
+            $keycloakClientId: '%env(KEYCLOAK_CLIENT_ID)%'
+            $keycloakClientSecret: '%env(KEYCLOAK_CLIENT_SECRET)%'
+
     Sentry\SentryBundle\Monolog\LogsHandler:
         arguments:
             - !php/const Monolog\Logger::INFO

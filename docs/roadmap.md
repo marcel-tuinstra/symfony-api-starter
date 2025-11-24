@@ -54,7 +54,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [x] JSON Monolog logging + daily rotation
 - [x] Global exception → Problem+ JSON mapper
 - [ ] ~~Context-aware logging trait for Processors~~
-- [ ] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
+- [X] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
 - [ ] Pagination defaults (25 $/ 100 max)
 - [ ] Optional `#[MapQueryString]` usage for lightweight filtering
 - [ ] Example `QueryFilterTrait`

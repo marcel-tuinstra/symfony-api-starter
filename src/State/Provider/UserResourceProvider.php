@@ -20,7 +20,31 @@ readonly class UserResourceProvider implements ProviderInterface
     {
         // Collection: /api/users
         if ($operation instanceof CollectionOperationInterface) {
-            $users = $this->userRepository->findAll();
+            $filters = $context['filters'] ?? [];
+
+            $criteria = [];
+            $order = [];
+
+            // SEARCH
+            if (isset($filters['email'])) {
+                $criteria['email'] = $filters['email'];
+            }
+
+            // ORDER
+            if (isset($filters['order'])) {
+                $order = $filters['order'];
+            }
+
+            // PAGINATION
+            $page = $filters['page'] ?? 1;
+            $perPage = $filters['itemsPerPage'] ?? 10;
+
+            $users = $this->userRepository->findBy(
+                $criteria,
+                $order,
+                $perPage,
+                ($page - 1) * $perPage
+            );
 
             return array_map([UserResource::class, 'fromEntity'], $users);
         }

@@ -23,7 +23,6 @@ use App\Repository\UserRepository;
 use App\State\Processor\SoftDeleteProcessor;
 use App\State\Provider\UserResourceProvider;
 use Doctrine\ORM\Mapping as ORM;
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -49,7 +48,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     'roles' => 'partial',
 ])]
 #[ApiFilter(OrderFilter::class, properties: ['email', 'createdAt'], arguments: ['orderParameterName' => 'order'])]
-class User implements UserInterface, JWTUserInterface, IdentifiableInterface, TimestampableInterface
+class User implements UserInterface, IdentifiableInterface, TimestampableInterface
 {
     use IdentifiableTrait;
     use TimestampableTrait;
@@ -121,16 +120,5 @@ class User implements UserInterface, JWTUserInterface, IdentifiableInterface, Ti
     public function eraseCredentials(): void
     {
         // No sensitive temporary data stored
-    }
-
-    public static function createFromPayload($username, array $payload)
-    {
-        $user = new self($username);
-
-        if (isset($payload['realm_access']['roles'])) {
-            $user->roles = array_map(fn ($r): string => 'ROLE_' . strtoupper((string) $r), $payload['realm_access']['roles']);
-        }
-
-        return $user;
     }
 }

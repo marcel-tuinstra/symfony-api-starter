@@ -13,6 +13,8 @@ class UserResource
         #[Groups(['user:read'])]
         public string $email,
         #[Groups(['user:read'])]
+        public array $roles,
+        #[Groups(['user:read'])]
         public array $meta
     ) {
     }
@@ -22,6 +24,7 @@ class UserResource
         return new self(
             id: $user->getId(),
             email: $user->getEmail(),
+            roles: $user->getRoles(),
             meta: [
                 'createdAt' => $user->getCreatedAt(),
                 'updatedAt' => $user->getUpdatedAt(),
