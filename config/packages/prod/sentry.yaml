@@ -18,7 +18,8 @@ monolog:
             type: service
             id: Sentry\SentryBundle\Monolog\LogsHandler
 
-    services:
-        Sentry\SentryBundle\Monolog\LogsHandler:
-            arguments:
-                - !php/const Monolog\Logger::INFO
+
+services:
+    Sentry\SentryBundle\Monolog\LogsHandler:
+        arguments:
+            - !php/const Monolog\Logger::INFO
