@@ -43,9 +43,17 @@ jobs:
             - name: Symfony cache warmup
               run: APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
 
-            - name: Run Makefile targets
-              run: |
-                  make lint
-                  make test
+            - name: PHPStan
+              run: vendor/bin/phpstan analyse
+              env:
+                  COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
+            - name: ECS
+              run: vendor/bin/ecs check src
+              env:
+                  COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
+            - name: PHPUnit
+              run: php bin/phpunit --colors=always
               env:
                   COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
