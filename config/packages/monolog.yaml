@@ -1,0 +1,4 @@
+monolog:
+    channels:
+        - deprecation
+        - app

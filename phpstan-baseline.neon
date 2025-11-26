@@ -1,7 +1,2 @@
 parameters:
 	ignoreErrors:
-		-
-			message: '#^Property App\\Entity\\User\:\:\$id is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User.php

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -20,7 +22,6 @@ use App\Repository\UserRepository;
 use App\State\Processor\SoftDeleteProcessor;
 use App\State\Provider\UserResourceProvider;
 use Doctrine\ORM\Mapping as ORM;
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -41,7 +42,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
     output: UserResource::class,
     provider: UserResourceProvider::class
 )]
-class User implements UserInterface, JWTUserInterface, IdentifiableInterface, TimestampableInterface
+#[ApiFilter(SearchFilter::class, properties: [
+    'email' => 'partial',
+    'roles' => 'partial',
+])]
+class User implements UserInterface, IdentifiableInterface, TimestampableInterface
 {
     use IdentifiableTrait;
     use TimestampableTrait;
@@ -113,16 +118,5 @@ class User implements UserInterface, JWTUserInterface, IdentifiableInterface, Ti
     public function eraseCredentials(): void
     {
         // No sensitive temporary data stored
-    }
-
-    public static function createFromPayload($username, array $payload)
-    {
-        $user = new self($username);
-
-        if (isset($payload['realm_access']['roles'])) {
-            $user->roles = array_map(fn ($r): string => 'ROLE_' . strtoupper((string) $r), $payload['realm_access']['roles']);
-        }
-
-        return $user;
     }
 }

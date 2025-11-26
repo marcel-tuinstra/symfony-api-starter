@@ -7,11 +7,17 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 class UserResource
 {
+    /**
+     * @param string[] $roles
+     * @param array<string, mixed> $meta
+     */
     public function __construct(
         #[Groups(['user:read'])]
         public string $id,
         #[Groups(['user:read'])]
         public string $email,
+        #[Groups(['user:read'])]
+        public array $roles,
         #[Groups(['user:read'])]
         public array $meta
     ) {
@@ -22,6 +28,7 @@ class UserResource
         return new self(
             id: $user->getId(),
             email: $user->getEmail(),
+            roles: $user->getRoles(),
             meta: [
                 'createdAt' => $user->getCreatedAt(),
                 'updatedAt' => $user->getUpdatedAt(),

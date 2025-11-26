@@ -50,21 +50,21 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ### **v0.0.4 — Observability, Filtering & Environment Maturity**
 **Goal:** Full visibility into runtime behaviour and robust, production-like configuration.
 
-- [ ] Sentry integration (`sentry/sentry-symfony`)
-- [ ] JSON Monolog logging + daily rotation
-- [ ] Global exception → Problem+ JSON mapper
-- [ ] Context-aware logging trait for Processors
-- [ ] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
-- [ ] Pagination defaults (25 $/ 100 max)
-- [ ] Optional `#[MapQueryString]` usage for lightweight filtering
-- [ ] Example `QueryFilterTrait`
-- [ ] Split config profiles (`dev`, `prod`, `test`)
-- [ ] Optimized Dockerfile with Opcache
-- [ ] `.env.dist` + `.env.test` examples
-- [ ] Env variable validation
-- [ ] Rate limiting (`symfony/rate-limiter`)
-- [ ] Security headers & CORS hardening
-- [ ] API version prefix `/api/v1/*`
+- [x] Sentry integration (`sentry/sentry-symfony`)
+- [x] JSON Monolog logging + daily rotation
+- [x] Global exception → Problem+ JSON mapper
+- [ ] ~~Context-aware logging trait for Processors~~
+- [X] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
+- [x] Pagination defaults (25 $/ 100 max)
+- [x] Optional `#[MapQueryString]` usage for lightweight filtering
+- [x] Example `QueryFilterTrait`
+- [x] Split config profiles (`dev`, `prod`, `test`)
+- [x] Optimized Dockerfile with Opcache
+- [x] `.env.dist` + `.env.test` examples
+- [ ] ~~Env variable validation~~
+- [x] Rate limiting (`symfony/rate-limiter`)
+- [ ] ~~Security headers & CORS hardening~~
+- [ ] ~~API version prefix `/api/v1/*`~~
 
 ---
 

@@ -1,9 +1,23 @@
 parameters:
     git_hook_variables:
         EXEC_GRUMPHP_COMMAND: 'docker compose exec php'
+    stop_on_failure: false
     tasks:
         phpstan:
             configuration: phpstan.neon
             level: 6
         ecs:
             config: ecs.php
+        git_blacklist:
+            keywords:
+                - ' dd('
+                - ' die('
+                - 'dump('
+                - 'die;'
+                - 'exit;'
+                - 'ini_set'
+                - 'error_reporting'
+                - 'set_time_limit'
+                - 'Auto-generated Migration: Please modify to your needs!'
+                - 'this up() migration is auto-generated, please modify it to your needs'
+                - 'this down() migration is auto-generated, please modify it to your needs'

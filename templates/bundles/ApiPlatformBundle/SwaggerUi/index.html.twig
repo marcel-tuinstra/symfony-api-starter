@@ -2,8 +2,10 @@
 
 {% block head_javascript %}
     {{ parent() }}
+
     <script>
         window.addEventListener('load', function () {
+
             const interval = setInterval(() => {
                 const authWrapper = document.querySelector('.auth-wrapper');
                 if (!authWrapper) return;
@@ -29,22 +31,59 @@
 
                         const data = await response.json();
                         if (!response.ok) {
-                            console.error('Keycloak error', data);
-                            alert(data.error_description || 'Failed to get token');
+                            alert('Failed to get token: ' + (data.error_description ?? 'Unknown error'));
                             return;
                         }
 
                         const token = data.access_token;
-                        await navigator.clipboard.writeText(token);
-                    } catch (e) {
-                        console.error('Unexpected error', e);
-                        alert('Could not contact Keycloak');
+
+                        // 1. Open the Swagger Authorization modal
+                        const authorizeButton = document.querySelector('.auth-wrapper .authorize');
+                        authorizeButton.click();
+
+                        // Wait for modal rendering
+                        setTimeout(() => {
+                            // 2. Insert token into the first input field
+                            const input = document.querySelector('.modal-ux-content input[type="text"]');
+
+                            if (!input) {
+                                alert("Token fetched, but modal input not found.");
+                                return;
+                            }
+
+                            // Set value and notify React of the change
+                            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+                            nativeInputValueSetter.call(input, token);
+                            input.dispatchEvent(new Event('input', { bubbles: true }));
+                            input.dispatchEvent(new Event('change', { bubbles: true }));
+
+                            // 3. Click the internal "Authorize" button (React-compatible)
+                            const modalAuthorize = document.querySelector('.modal-ux-content .btn.modal-btn.auth.authorize.button');
+
+                            if (modalAuthorize) {
+                                // Use native click(), which React listens to
+                                modalAuthorize.click();
+                            } else {
+                                alert("Authorize button not found.");
+                            }
+
+                            // 4. Close the modal
+                            setTimeout(() => {
+                                const closeButton = document.querySelector('.modal-ux-header .close');
+                                if (closeButton) closeButton.click();
+                            }, 500);
+
+                        }, 300);
+
+                    } catch (error) {
+                        alert('Error: ' + error.message);
                     }
                 });
 
                 authWrapper.insertAdjacentElement('beforebegin', loginButton);
                 clearInterval(interval);
             }, 500);
+
         });
     </script>
 {% endblock %}

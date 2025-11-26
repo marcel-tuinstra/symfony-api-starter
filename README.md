@@ -1,15 +1,15 @@
 # Symfony API Starter
 
 [![GitHub Actions CI](https://github.com/marcel-tuinstra/symfony-api-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/marcel-tuinstra/symfony-api-starter/actions)
-[![PHPStan Level](https://img.shields.io/badge/PHPStan-Level%207-brightgreen)](https://phpstan.org/)
-[![Coverage](https://img.shields.io/badge/coverage-70%25-brightgreen)](https://github.com/username/projectname/actions)
+[![PHPStan Level](https://img.shields.io/badge/PHPStan-Level%206-brightgreen)](https://phpstan.org/)
+[![Coverage](https://img.shields.io/badge/coverage-0%25-red)](https://github.com/username/projectname/actions)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
 
 ## About
 
-ProjectName is a robust, scalable PHP API platform designed to accelerate backend development with modern tools and best practices. Built with a focus on maintainability, security, and developer experience, it integrates seamlessly with popular services like Keycloak for authentication and Sentry for error monitoring.
+This starter template provides a robust, scalable PHP API platform designed to accelerate backend development with modern tools and best practices. Built with a focus on maintainability, security, and developer experience, it integrates seamlessly with popular services like Keycloak for authentication and Sentry for error monitoring.
 
 The philosophy centers on delivering a clean, extensible architecture that supports rapid iteration without sacrificing quality.
 
@@ -48,12 +48,11 @@ cd symfony-api-starter
 # 2. Copy environment configuration
 cp .env.dist .env.local
 
-
 # 3. Start the full Docker stack (PHP, Postgres, Keycloak, Mailpit)
 make up
 
 # 4. Initialize the database schema and load fixtures
-make fixtures
+make db-create migrate fixtures
 
 # 5 Sync Keycloak public key
 # Automatically fetch the active RS256 key from Keycloak’s JWKS endpoint and update config/jwt/keycloak_public.pem
@@ -84,7 +83,7 @@ The API uses Keycloak JWT authentication. All routes require a valid Bearer toke
 You can obtain a token from Keycloak using the client credentials grant type. Example `curl` command:
 
 ```bash
-curl --location --request POST 'http://localhost:8081/realms/your-realm/protocol/openid-connect/token' \
+curl --location --request POST 'http://localhost:8180/realms/your-realm/protocol/openid-connect/token' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
 --data-urlencode 'client_id=your-client-id' \
 --data-urlencode 'client_secret=your-client-secret' \
