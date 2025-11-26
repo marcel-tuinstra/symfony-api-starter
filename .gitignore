@@ -18,7 +18,9 @@ phpstan.neon
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
 ###> keycloak ###
 /keycloak-data
 /keycloak-db
+/config/jwt
 ###< keycloak ###

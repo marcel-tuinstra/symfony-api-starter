@@ -8,30 +8,29 @@ use App\Entity\Interface\TimestampableInterface;
 
 /**
  * @template T of TimestampableInterface
- * @implements ProcessorInterface<T>
+ * @template TContext of array
+ * @implements ProcessorInterface<T, TContext>
  *
  * Handles soft deletion of entities that implement {@see TimestampableInterface}.
  * Marks the entity as deleted (using `softDelete()`) and persists it.
  */
 readonly class SoftDeleteProcessor implements ProcessorInterface
 {
+    /**
+     * @param ProcessorInterface<T, TContext> $persistProcessor
+     */
     public function __construct(
         private ProcessorInterface $persistProcessor,
     ) {
     }
 
     /**
-     * Marks the given entity as deleted and persists the change.
-     *
-     * @param TimestampableInterface $data The entity to soft delete.
-     * @param Operation $operation The current API Platform operation metadata.
-     * @param array<string, mixed> $uriVariables URI variables for the operation.
-     * @param array<string, mixed> $context The execution context.
+     * @return T|T[]|null
      */
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         $data->softDelete();
 
-        $this->persistProcessor->process($data, $operation, $uriVariables, $context);
+        return $this->persistProcessor->process($data, $operation, $uriVariables, $context);
     }
 }

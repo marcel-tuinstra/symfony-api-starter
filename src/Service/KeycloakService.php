@@ -11,18 +11,18 @@ class KeycloakService
 {
     public function __construct(
         private HttpClientInterface $httpClient,
-        private LoggerInterface     $logger,
-        private string              $keycloakBaseUrl,
-        private string              $keycloakRealm,
-        private string              $keycloakClientId,
-        private string              $keycloakClientSecret
-    )
-    {
-
+        private LoggerInterface $logger,
+        private string $keycloakBaseUrl,
+        private string $keycloakRealm,
+        private string $keycloakClientId,
+        private string $keycloakClientSecret
+    ) {
     }
 
     /**
      * Create user in Keycloak + assign roles (realm roles).
+     *
+     * @param string[] $roles
      */
     public function createUserInKeycloak(string $email, array $roles): void
     {
@@ -37,11 +37,11 @@ class KeycloakService
             ), [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $token,
-                    'Content-Type'  => 'application/json',
+                    'Content-Type' => 'application/json',
                 ],
-                'json'    => [
-                    'enabled'  => true,
-                    'email'    => $email,
+                'json' => [
+                    'enabled' => true,
+                    'email' => $email,
                     'username' => $email,
                 ],
             ]);
@@ -51,20 +51,22 @@ class KeycloakService
             if ($status === 201) {
                 // Extract user ID from Location header
                 $locationHeader = $createUserResponse->getHeaders()['location'][0] ?? null;
-                $userId         = $locationHeader ? basename($locationHeader) : null;
+                $userId = $locationHeader ? basename($locationHeader) : null;
             } elseif ($status === 409) {
                 // User already exists: fetch user ID
                 $userId = $this->findUserIdByEmail($token, $email);
             } else {
                 $this->logger->error('Failed to create user in Keycloak', [
-                    'email'    => $email,
-                    'response' => $createUserResponse->getContent(false)
+                    'email' => $email,
+                    'response' => $createUserResponse->getContent(false),
                 ]);
                 return;
             }
 
-            if (!$userId) {
-                $this->logger->error('Could not determine Keycloak user ID', ['email' => $email]);
+            if (! $userId) {
+                $this->logger->error('Could not determine Keycloak user ID', [
+                    'email' => $email,
+                ]);
                 return;
             }
 
@@ -72,11 +74,10 @@ class KeycloakService
             foreach ($roles as $roleName) {
                 $this->assignRole($token, $userId, $roleName);
             }
-
         } catch (\Throwable $e) {
             $this->logger->error('Keycloak sync failed: ' . $e->getMessage(), [
                 'email' => $email,
-                'roles' => $roles
+                'roles' => $roles,
             ]);
         }
     }
@@ -88,8 +89,10 @@ class KeycloakService
     {
         $role = $this->getRoleRepresentation($token, $roleName);
 
-        if (!$role) {
-            $this->logger->warning('Role not found in Keycloak', ['role' => $roleName]);
+        if (! $role) {
+            $this->logger->warning('Role not found in Keycloak', [
+                'role' => $roleName,
+            ]);
             return;
         }
 
@@ -103,11 +106,11 @@ class KeycloakService
         $this->httpClient->request('POST', $url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
-                'Content-Type'  => 'application/json',
-                'Accept'       => 'application/json',
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
             ],
-            'json'    => [[
-                'id'   => $role['id'],
+            'json' => [[
+                'id' => $role['id'],
                 'name' => $role['name'],
             ]],
         ]);
@@ -115,6 +118,8 @@ class KeycloakService
 
     /**
      * Fetch full Keycloak role representation (ID + name).
+     *
+     * @return array<string, mixed>|null
      */
     private function getRoleRepresentation(string $token, string $roleName): ?array
     {
@@ -128,7 +133,7 @@ class KeycloakService
         $response = $this->httpClient->request('GET', $url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
-            ]
+            ],
         ]);
 
         if ($response->getStatusCode() !== 200) {
@@ -151,7 +156,7 @@ class KeycloakService
         ), [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
-            ]
+            ],
         ]);
 
         $users = $response->toArray(false);
@@ -170,9 +175,9 @@ class KeycloakService
             $this->keycloakRealm
         ), [
             'body' => [
-                'client_id'     => $this->keycloakClientId,
+                'client_id' => $this->keycloakClientId,
                 'client_secret' => $this->keycloakClientSecret,
-                'grant_type'    => 'client_credentials',
+                'grant_type' => 'client_credentials',
             ],
         ]);
 

@@ -8,25 +8,24 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class KeycloakAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private readonly HttpClientInterface    $httpClient,
+        private readonly HttpClientInterface $httpClient,
         private readonly EntityManagerInterface $em,
-        private readonly UserRepository         $users,
-        private readonly string                 $introspectionUrl,
-        private readonly string                 $clientId,
-        private readonly string                 $clientSecret,
-    )
-    {
+        private readonly UserRepository $users,
+        private readonly string $introspectionUrl,
+        private readonly string $clientId,
+        private readonly string $clientSecret,
+    ) {
     }
 
     public function supports(Request $request): ?bool
@@ -40,7 +39,7 @@ class KeycloakAuthenticator extends AbstractAuthenticator
     {
         $authHeader = $request->headers->get('Authorization');
 
-        if (!$authHeader || !preg_match('/Bearer\s+(.*)/i', $authHeader, $m)) {
+        if (! $authHeader || ! preg_match('/Bearer\s+(.*)/i', $authHeader, $m)) {
             throw new AuthenticationException('No bearer token found');
         }
 
@@ -49,13 +48,13 @@ class KeycloakAuthenticator extends AbstractAuthenticator
         // Call Keycloak introspection endpoint
         $response = $this->httpClient->request('POST', $this->introspectionUrl, [
             'body' => [
-                'token'         => $token,
-                'client_id'     => $this->clientId,
+                'token' => $token,
+                'client_id' => $this->clientId,
                 'client_secret' => $this->clientSecret,
             ],
         ]);
 
-        if (Response::HTTP_OK !== $response->getStatusCode()) {
+        if ($response->getStatusCode() !== Response::HTTP_OK) {
             throw new AuthenticationException('Introspection request failed');
         }
 
@@ -68,30 +67,32 @@ class KeycloakAuthenticator extends AbstractAuthenticator
         // Use email as identifier (as you requested)
         $email = $data['email'] ?? $data['preferred_username'] ?? null;
 
-        if (!$email) {
+        if (! $email) {
             throw new AuthenticationException('No email claim in token');
         }
 
         $kcRoles = $data['realm_access']['roles'] ?? [];
-        if (!is_array($kcRoles)) {
+        if (! is_array($kcRoles)) {
             $kcRoles = [];
         }
 
         // Map Keycloak roles → Symfony roles
         $roles = array_values(array_unique(array_filter(
             $kcRoles,
-            static fn(string $role): bool => str_starts_with($role, 'ROLE_')
+            static fn (string $role): bool => str_starts_with($role, 'ROLE_')
         )));
 
         // Every authenticated user gets at least ROLE_USER
-        if (!in_array('ROLE_USER', $roles, true)) {
+        if (! in_array('ROLE_USER', $roles, true)) {
             $roles[] = 'ROLE_USER';
         }
 
         $userLoader = function (string $identifier) use ($roles): UserInterface {
-            $user = $this->users->findOneBy(['email' => $identifier]);
+            $user = $this->users->findOneBy([
+                'email' => $identifier,
+            ]);
 
-            if (!$user) {
+            if (! $user) {
                 $user = new User($identifier);
                 $this->em->persist($user);
             }
@@ -115,7 +116,7 @@ class KeycloakAuthenticator extends AbstractAuthenticator
     {
         return new JsonResponse([
             'message' => 'Authentication failed',
-            'error'   => $exception->getMessage(),
+            'error' => $exception->getMessage(),
         ], Response::HTTP_UNAUTHORIZED);
     }
 }

@@ -12,9 +12,9 @@ use Faker\Factory;
 
 class UserFixtures extends Fixture
 {
-    public function __construct(private readonly KeycloakService $keycloakService)
-    {
-
+    public function __construct(
+        private readonly KeycloakService $keycloakService
+    ) {
     }
 
     public function load(ObjectManager $manager): void

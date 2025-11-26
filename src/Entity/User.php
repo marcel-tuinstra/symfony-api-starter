@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use App\ApiResource\UserResource;
 use App\Entity\Interface\IdentifiableInterface;
 use App\Entity\Interface\TimestampableInterface;
@@ -44,10 +43,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
     provider: UserResourceProvider::class
 )]
 #[ApiFilter(SearchFilter::class, properties: [
-    'email' => 'ipartial',
+    'email' => 'partial',
     'roles' => 'partial',
 ])]
-#[ApiFilter(OrderFilter::class, properties: ['email', 'createdAt'], arguments: ['orderParameterName' => 'order'])]
 class User implements UserInterface, IdentifiableInterface, TimestampableInterface
 {
     use IdentifiableTrait;

@@ -55,9 +55,9 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [x] Global exception → Problem+ JSON mapper
 - [ ] ~~Context-aware logging trait for Processors~~
 - [X] Global filters (`SearchFilter`, `OrderFilter`, `BooleanFilter`)
-- [ ] Pagination defaults (25 $/ 100 max)
-- [ ] Optional `#[MapQueryString]` usage for lightweight filtering
-- [ ] Example `QueryFilterTrait`
+- [x] Pagination defaults (25 $/ 100 max)
+- [x] Optional `#[MapQueryString]` usage for lightweight filtering
+- [x] Example `QueryFilterTrait`
 - [x] Split config profiles (`dev`, `prod`, `test`)
 - [x] Optimized Dockerfile with Opcache
 - [x] `.env.dist` + `.env.test` examples

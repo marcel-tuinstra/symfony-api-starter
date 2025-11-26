@@ -7,6 +7,10 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 class UserResource
 {
+    /**
+     * @param string[] $roles
+     * @param array<string, mixed> $meta
+     */
     public function __construct(
         #[Groups(['user:read'])]
         public string $id,
