@@ -4,7 +4,9 @@ namespace App\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use App\ApiResource\UserResource;
 use App\Entity\Interface\TimestampableInterface;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
 /**
  * @template T of TimestampableInterface
@@ -21,16 +23,19 @@ readonly class SoftDeleteProcessor implements ProcessorInterface
      */
     public function __construct(
         private ProcessorInterface $persistProcessor,
+        private ObjectMapperInterface $objectMapper
     ) {
     }
 
     /**
      * @return T|T[]|null
      */
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): UserResource
     {
         $data->softDelete();
 
-        return $this->persistProcessor->process($data, $operation, $uriVariables, $context);
+        $entity = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
+
+        return $this->objectMapper->map($entity, $operation->getClass());
     }
 }

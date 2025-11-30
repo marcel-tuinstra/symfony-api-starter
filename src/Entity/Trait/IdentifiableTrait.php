@@ -10,7 +10,6 @@ use Symfony\Component\Uid\Uuid;
 
 trait IdentifiableTrait
 {
-    #[Groups(['user:read'])]
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
