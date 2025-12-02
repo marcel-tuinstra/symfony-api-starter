@@ -84,6 +84,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [ ] Docker healthchecks
 - [ ] `/docs` folder with architecture, CI/CD, testing guides
 - [ ] Auto-generated OpenAPI spec `/docs/openapi.json`
+- [ ] Split CI pipelines (lint, tests, coverage artifacts) with reporting
 - [ ] README badges (CI, PHPStan, Coverage)
 - [ ] Example Insomnia / Postman collection
 
@@ -96,6 +97,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [ ] Coverage artifact upload
 - [ ] Auto-deploy `develop` → staging via SSH
 - [ ] Secrets: `DEPLOY_HOST`, `DEPLOY_PATH`, `DEPLOY_KEY`
+- [ ] (Long-term) Auto-deploy to acceptance environment
 
 ---
 

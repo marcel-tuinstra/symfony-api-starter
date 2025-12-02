@@ -1,6 +1,6 @@
 ---
-name: Feature
-about: Propose a new feature
+name: Feature Request
+about: Propose a new feature or enhancement
 title: "feat: "
 labels: enhancement
 assignees: ''
@@ -13,8 +13,8 @@ What problem does this solve?
 ## Acceptance criteria
 
 - [ ] Behaviour described
-- [ ] Tests added (unit/integration)
-- [ ] Docs updated (`README` / `docs`)
+- [ ] Tests added (unit/integration/functional)
+- [ ] Docs updated (README / docs)
 
 ## Implementation notes
 
