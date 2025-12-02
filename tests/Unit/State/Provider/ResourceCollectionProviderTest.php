@@ -39,6 +39,27 @@ class ResourceCollectionProviderTest extends UnitTestCase
         // Assert
         $this->assertSame([$mapped], $resources);
     }
+
+    public function testItFailsWhenTargetClassIsMissing(): void
+    {
+        // Arrange
+        $operation = $this->mock(Operation::class);
+        $operation->method('getClass')->willReturn('App\\MissingClass');
+        $operation->method('getOutput')->willReturn(null);
+
+        $doctrineProvider = $this->mock(ProviderInterface::class);
+        $doctrineProvider->method('provide')->willReturn([]);
+
+        $objectMapper = $this->mock(ObjectMapperInterface::class);
+
+        $provider = new ResourceCollectionProvider($doctrineProvider, $objectMapper);
+
+        // Assert
+        $this->expectException(\LogicException::class);
+
+        // Act
+        $provider->provide($operation);
+    }
 }
 
 final class DummyResource
