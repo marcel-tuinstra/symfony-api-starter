@@ -160,9 +160,13 @@ jobs:
             const covered = process.env.COVERAGE_COVERED || '0';
             const missed = process.env.COVERAGE_MISSED || '0';
             const body = `**Coverage report**\n\n- Statements: ${statements}\n- Covered: ${covered}\n- Missed: ${missed}\n- Coverage: ${coverage}% (threshold ${threshold}%)\n\nArtifact: coverage-clover (clover.xml)`;
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body,
-            });
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            } catch (error) {
+              core.warning(`Unable to post coverage comment (likely due to permissions): ${error.message}`);
+            }
