@@ -2,7 +2,6 @@
 
 namespace App\Api\Resource;
 
-use ApiPlatform\Doctrine\Orm\Filter\ExactFilter;
 use ApiPlatform\Doctrine\Orm\Filter\PartialSearchFilter;
 use ApiPlatform\Doctrine\Orm\State\Options;
 use ApiPlatform\Metadata\ApiResource;
@@ -12,9 +11,13 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use App\Api\Collection\UserCollection;
+use App\Api\Contract\TimestampedResourceInterface;
+use App\Api\Contract\TimestampedResourceTrait;
+use App\Api\Input\UserInput;
 use App\Entity\User;
 use App\State\Processor\SoftDeleteProcessor;
-use DateTimeImmutable;
+use App\State\Provider\ResourceCollectionProvider;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
@@ -28,6 +31,8 @@ use Symfony\Component\Uid\Uuid;
         new GetCollection(
             uriTemplate: '/users',
             security: "is_granted('ROLE_USER')",
+            output: UserCollection::class,
+            provider: ResourceCollectionProvider::class,
             parameters: [
                 'email' => new QueryParameter(
                     filter: new PartialSearchFilter(),
@@ -38,38 +43,41 @@ use Symfony\Component\Uid\Uuid;
                     property: 'roles',
                 ),
             ],
-            jsonStream: false,
         ),
         new Post(
             uriTemplate: '/users',
-            security: "is_granted('ROLE_ADMIN')"
+            security: "is_granted('ROLE_ADMIN')",
+            validationContext: [
+                'groups' => ['user:create'],
+            ],
+            input: UserInput::class,
         ),
         new Patch(
             uriTemplate: '/users/{id}',
             uriVariables: ['id'],
-            security: "is_granted('ROLE_ADMIN')"
+            security: "is_granted('ROLE_ADMIN')",
+            validationContext: [
+                'groups' => ['user:update'],
+            ],
+            input: UserInput::class,
         ),
         new Delete(
             uriTemplate: '/users/{id}',
             uriVariables: ['id'],
             security: "is_granted('ROLE_ADMIN')",
             processor: SoftDeleteProcessor::class
-        )
+        ),
     ],
     stateOptions: new Options(entityClass: User::class),
-    jsonStream: true,
 )]
 #[Map(source: User::class)]
-class UserResource
+final class UserResource implements TimestampedResourceInterface
 {
+    use TimestampedResourceTrait;
+
     public Uuid $id;
 
-//    #[Map(source: 'email')]
     public string $email;
 
     public array $roles = [];
-
-    public ?DateTimeImmutable $createdAt = null;
-    public ?DateTimeImmutable $updatedAt = null;
-    public ?DateTimeImmutable $deletedAt = null;
 }
