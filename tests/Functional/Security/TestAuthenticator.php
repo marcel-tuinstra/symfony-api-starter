@@ -49,7 +49,9 @@ class TestAuthenticator extends AbstractAuthenticator
         $roles = array_values(array_filter(array_map('trim', explode(',', $rolesString))));
 
         $userLoader = function (string $identifier) use ($roles): UserInterface {
-            $user = $this->users->findOneBy(['email' => $identifier]) ?? new User($identifier);
+            $user = $this->users->findOneBy([
+                'email' => $identifier,
+            ]) ?? new User($identifier);
             $user->setRoles($roles === [] ? ['ROLE_USER'] : $roles);
 
             $this->entityManager->persist($user);

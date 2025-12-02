@@ -48,6 +48,8 @@ class OpenApiFactoryTest extends UnitTestCase
         $this->assertSame('http', $scheme->getType());
         $this->assertSame('bearer', $scheme->getScheme());
         $this->assertSame('JWT', $scheme->getBearerFormat());
-        $this->assertSame([['bearerAuth' => []]], $openApi->getSecurity());
+        $this->assertSame([[
+            'bearerAuth' => [],
+        ]], $openApi->getSecurity());
     }
 }

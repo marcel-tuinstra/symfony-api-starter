@@ -18,10 +18,14 @@ class KeycloakServiceTest extends UnitTestCase
         $httpClient = $this->mock(HttpClientInterface::class);
         $logger = $this->mock(LoggerInterface::class);
 
-        $tokenResponse = $this->createResponse(['access_token' => 'access-token']);
+        $tokenResponse = $this->createResponse([
+            'access_token' => 'access-token',
+        ]);
         $createUserResponse = $this->createResponse(
             statusCode: 201,
-            headers: ['location' => ['https://keycloak.test/admin/realms/dev/users/uuid']]
+            headers: [
+                'location' => ['https://keycloak.test/admin/realms/dev/users/uuid'],
+            ]
         );
         $roleLookupResponse = $this->createResponse(statusCode: 404);
 
@@ -45,7 +49,9 @@ class KeycloakServiceTest extends UnitTestCase
 
         $logger->expects(self::once())
             ->method('warning')
-            ->with('Role not found in Keycloak', ['role' => 'ROLE_USER']);
+            ->with('Role not found in Keycloak', [
+                'role' => 'ROLE_USER',
+            ]);
         $logger->expects(self::never())->method('error');
 
         $service = new KeycloakService(

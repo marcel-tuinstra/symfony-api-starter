@@ -54,7 +54,7 @@ class TimestampableTraitTest extends UnitTestCase
 
     private function createEntity(): object
     {
-        return new class {
+        return new class() {
             use TimestampableTrait;
         };
     }

@@ -1568,6 +1568,11 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         ...<mixed>
  *     },
  * }
+ * @psalm-type MakerConfig = array{
+ *     root_namespace?: scalar|null, // Default: "App"
+ *     generate_final_classes?: bool, // Default: true
+ *     generate_final_entities?: bool, // Default: false
+ * }
  * @psalm-type SentryConfig = array{
  *     dsn?: scalar|null, // If this value is not provided, the SDK will try to read it from the SENTRY_DSN environment variable. If that variable also does not exist, the SDK will not send any events.
  *     register_error_listener?: bool, // Default: true
@@ -1617,7 +1622,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         http_ssl_verify_peer?: bool,
  *         http_compression?: bool,
  *         capture_silenced_errors?: bool,
- *         max_request_body_size?: "none"|"small"|"medium"|"always",
+ *         max_request_body_size?: "none"|"never"|"small"|"medium"|"always",
  *         class_serializers?: array<string, scalar|null>,
  *     },
  *     messenger?: bool|array{
@@ -1812,11 +1817,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *             elements?: list<scalar|null>,
  *         },
  *     }>,
- * }
- * @psalm-type MakerConfig = array{
- *     root_namespace?: scalar|null, // Default: "App"
- *     generate_final_classes?: bool, // Default: true
- *     generate_final_entities?: bool, // Default: false
  * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
