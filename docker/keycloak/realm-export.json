@@ -1,6 +1,15 @@
 {
     "realm": "symfony",
     "enabled": true,
+    "attributes": {
+        "access.token.lifespan": "43200",
+        "sso.session.idle.timeout": "43200",
+        "sso.session.max.lifespan": "86400",
+        "client.session.idle.timeout": "43200",
+        "client.session.max.lifespan": "86400",
+        "offline.session.idle.timeout": "2592000",
+        "offline.session.max.lifespan": "5184000"
+    },
     "clients": [
         {
             "clientId": "symfony-api",
@@ -8,7 +17,10 @@
             "redirectUris": ["http://localhost:8080/*"],
             "publicClient": true,
             "standardFlowEnabled": true,
-            "protocol": "openid-connect"
+            "directAccessGrantsEnabled": true,
+            "protocol": "openid-connect",
+            "defaultClientScopes": ["web-origins", "role_list", "profile", "email"],
+            "optionalClientScopes": ["address", "phone", "offline_access"]
         }
     ],
     "roles": {

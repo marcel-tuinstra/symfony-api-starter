@@ -7,19 +7,15 @@ use DateTime;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Attribute\Groups;
 
 trait TimestampableTrait
 {
-    #[Groups(['user:read'])]
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     protected ?DateTimeImmutable $createdAt = null;
 
-    #[Groups(['user:read'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     protected ?DateTime $updatedAt = null;
 
-    #[Groups(['user:read'])]
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     protected ?DateTimeImmutable $deletedAt = null;
 
