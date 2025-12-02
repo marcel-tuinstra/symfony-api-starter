@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - develop
+  workflow_dispatch:
 
 jobs:
   phpunit:
@@ -125,7 +126,16 @@ jobs:
           echo "COVERAGE=$COVERAGE" >> "$GITHUB_ENV"
 
       - name: Enforce coverage threshold (70%)
-        run: php -r ' $threshold = (float) getenv("COVERAGE_THRESHOLD"); $coverage = (float) getenv("COVERAGE"); if ($coverage < $threshold) { fwrite(STDERR, \"Coverage $coverage% is below required ${threshold}%\\n\"); exit(1);} echo \"Coverage OK: $coverage% (threshold ${threshold}%)\\n\";'
+        run: |
+          php -r '
+            $threshold = (float) getenv("COVERAGE_THRESHOLD");
+            $coverage = (float) getenv("COVERAGE");
+            if ($coverage < $threshold) {
+              fwrite(STDERR, "Coverage {$coverage}% is below required {$threshold}%\n");
+              exit(1);
+            }
+            echo "Coverage OK: {$coverage}% (threshold {$threshold}%)\n";
+          ';
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
