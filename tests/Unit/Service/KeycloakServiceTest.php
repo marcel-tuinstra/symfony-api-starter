@@ -76,12 +76,19 @@ class KeycloakServiceTest extends UnitTestCase
         $httpClient = $this->mock(HttpClientInterface::class);
         $logger = $this->mock(LoggerInterface::class);
 
-        $tokenResponse = $this->createResponse(['access_token' => 'access-token']);
+        $tokenResponse = $this->createResponse([
+            'access_token' => 'access-token',
+        ]);
         $createUserResponse = $this->createResponse(
             statusCode: 201,
-            headers: ['location' => ['https://keycloak.test/admin/realms/dev/users/uuid']]
+            headers: [
+                'location' => ['https://keycloak.test/admin/realms/dev/users/uuid'],
+            ]
         );
-        $roleLookupResponse = $this->createResponse(['id' => 'role-id', 'name' => 'ROLE_ADMIN']);
+        $roleLookupResponse = $this->createResponse([
+            'id' => 'role-id',
+            'name' => 'ROLE_ADMIN',
+        ]);
         $assignRoleResponse = $this->createResponse(statusCode: 204);
 
         $httpClient->method('request')
@@ -127,12 +134,19 @@ class KeycloakServiceTest extends UnitTestCase
         $httpClient = $this->mock(HttpClientInterface::class);
         $logger = $this->mock(LoggerInterface::class);
 
-        $tokenResponse = $this->createResponse(['access_token' => 'access-token']);
+        $tokenResponse = $this->createResponse([
+            'access_token' => 'access-token',
+        ]);
         $conflictResponse = $this->createResponse(statusCode: 409);
         $findUserResponse = $this->createResponse([
-            ['id' => 'existing-id'],
+            [
+                'id' => 'existing-id',
+            ],
         ]);
-        $roleLookupResponse = $this->createResponse(['id' => 'role-id', 'name' => 'ROLE_USER']);
+        $roleLookupResponse = $this->createResponse([
+            'id' => 'role-id',
+            'name' => 'ROLE_USER',
+        ]);
         $assignRoleResponse = $this->createResponse(statusCode: 204);
 
         $httpClient->method('request')

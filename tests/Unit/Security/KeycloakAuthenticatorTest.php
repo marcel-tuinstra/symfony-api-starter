@@ -11,7 +11,6 @@ use App\Tests\Unit\UnitTestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -30,7 +29,9 @@ class KeycloakAuthenticatorTest extends UnitTestCase
         $response->method('toArray')->willReturn([
             'active' => true,
             'email' => 'kc@example.com',
-            'realm_access' => ['roles' => ['ROLE_ADMIN']],
+            'realm_access' => [
+                'roles' => ['ROLE_ADMIN'],
+            ],
         ]);
 
         $httpClient->method('request')->willReturn($response);
@@ -107,12 +108,19 @@ class KeycloakAuthenticatorTest extends UnitTestCase
     public static function provideInvalidTokens(): iterable
     {
         yield 'inactive token' => [
-            ['active' => false],
+            [
+                'active' => false,
+            ],
             'Token is not active',
         ];
 
         yield 'missing email' => [
-            ['active' => true, 'realm_access' => ['roles' => []]],
+            [
+                'active' => true,
+                'realm_access' => [
+                    'roles' => [],
+                ],
+            ],
             'No email claim in token',
         ];
     }

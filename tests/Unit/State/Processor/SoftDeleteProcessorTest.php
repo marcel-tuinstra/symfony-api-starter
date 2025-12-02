@@ -16,7 +16,7 @@ class SoftDeleteProcessorTest extends UnitTestCase
     public function testItSoftDeletesAndMapsResource(): void
     {
         // Arrange
-        $entity = new class implements TimestampedResourceInterface {
+        $entity = new class() implements TimestampedResourceInterface {
             public bool $deleted = false;
 
             public function softDelete(): void
