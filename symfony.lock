@@ -10,7 +10,7 @@
         "files": [
             "config/packages/api_platform.yaml",
             "config/routes/api_platform.yaml",
-            "src/ApiResource/.gitignore"
+            "src/Api/Resource/.gitignore"
         ]
     },
     "doctrine/deprecations": {

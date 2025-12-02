@@ -6,8 +6,10 @@ parameters:
         phpstan:
             configuration: phpstan.neon
             level: 6
+            triggered_by: [php]
         ecs:
             config: ecs.php
+            triggered_by: [php]
         git_blacklist:
             keywords:
                 - ' dd('

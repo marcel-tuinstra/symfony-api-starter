@@ -21,5 +21,7 @@ api_platform:
             search: 'api_platform.doctrine.orm.search_filter'
             order: 'api_platform.doctrine.orm.order_filter'
             boolean: 'api_platform.doctrine.orm.boolean_filter'
-        normalization_context:
-            groups: ['user:read']
+
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Api/Resource'

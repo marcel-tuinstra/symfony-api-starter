@@ -71,11 +71,11 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ### **v0.0.5 — Testing, CI/CD & Documentation**
 **Goal:** High confidence, automated delivery, and clear developer onboarding.
 
-- [ ] PHPUnit + ApiPlatform `ApiTestCase`
-- [ ] `FunctionalTestCase` base class
+- [X] PHPUnit + ApiPlatform `ApiTestCase`
+- [X] `FunctionalTestCase` base class
 - [ ] Functional tests for authentication & authorization
-- [ ] Unit / Integration / Functional split
-- [ ] Coverage enforcement in CI
+- [X] Unit / Integration / Functional split
+- [X] Coverage enforcement in CI
 - [ ] Faker fixtures loaded for integration tests
 - [ ] PHPStan, Rector, ECS, PHPUnit steps
 - [ ] Full type coverage (no `mixed`)
@@ -84,7 +84,8 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [ ] Docker healthchecks
 - [ ] `/docs` folder with architecture, CI/CD, testing guides
 - [ ] Auto-generated OpenAPI spec `/docs/openapi.json`
-- [ ] README badges (CI, PHPStan, Coverage)
+- [X] Split CI pipelines (lint, tests, coverage artifacts) with reporting
+- [X] README badges (CI, PHPStan, Coverage)
 - [ ] Example Insomnia / Postman collection
 
 ---
@@ -96,6 +97,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 - [ ] Coverage artifact upload
 - [ ] Auto-deploy `develop` → staging via SSH
 - [ ] Secrets: `DEPLOY_HOST`, `DEPLOY_PATH`, `DEPLOY_KEY`
+- [ ] (Long-term) Auto-deploy to acceptance environment
 
 ---
 
