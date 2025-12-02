@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    App\Tests\Functional\:
+        resource: '../tests/Functional/*'
+
+    App\Security\KeycloakAuthenticator:
+        alias: App\Tests\Functional\Security\TestAuthenticator

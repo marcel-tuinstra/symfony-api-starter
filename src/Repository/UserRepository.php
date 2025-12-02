@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -22,7 +23,7 @@ class UserRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('u');
         $queryBuilder
             ->where('u.id = :id')
-            ->setParameter('id', $uuid);
+            ->setParameter('id', $uuid, UuidType::NAME);
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }

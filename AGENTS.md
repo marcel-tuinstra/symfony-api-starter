@@ -22,8 +22,10 @@
 - Use PHP 8.2+ features (typed properties, readonly where possible, constructor promotion). Prefer UUIDs from `symfony/uid`.
 - Prefer Symfony/ObjectMapper with API Platform custom input/output DTOs; fall back to serialization groups (`<entity>:read` / `<entity>:write`) only when DTO mapping cannot cover the scenario. Roles use `Role::USER` / `Role::ADMIN`.
 - Name tests with clear intent (e.g., `UserRegistrationTest`), services with explicit suffixes (`*Service`, `*Repository`).
+- Import built-ins like `DateTime`, `DateTimeImmutable`, and `Exception` instead of referencing them with leading backslashes.
 
 ## Testing Guidelines
+- Use AAA style with explicit `// Arrange`, `// Act`, `// Assert` comments in tests.
 - Target ≥70% coverage; include unit coverage for pure logic and integration/functional tests for persistence and HTTP contracts.
 - Use `tests/Functional` for API Platform endpoints (e.g., `UserApiTest`), `tests/Integration` for repositories/services hitting the DB, and `tests/Unit` for isolated domain logic.
 - Reset state with `make prepare-test-db` when debugging DB-related failures.

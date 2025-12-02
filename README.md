@@ -1,8 +1,9 @@
 # Symfony API Starter
 
-[![GitHub Actions CI](https://github.com/marcel-tuinstra/symfony-api-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/marcel-tuinstra/symfony-api-starter/actions)
+[![Lint](https://github.com/marcel-tuinstra/symfony-api-starter/actions/workflows/lint.yml/badge.svg?branch=develop&label=lint)](https://github.com/marcel-tuinstra/symfony-api-starter/actions/workflows/lint.yml)
+[![Tests](https://github.com/marcel-tuinstra/symfony-api-starter/actions/workflows/tests.yml/badge.svg?branch=develop&label=tests)](https://github.com/marcel-tuinstra/symfony-api-starter/actions/workflows/tests.yml)
+[![Coverage](https://img.shields.io/badge/coverage-%E2%89%A570%25-blue)](https://github.com/marcel-tuinstra/symfony-api-starter/actions/workflows/tests.yml)
 [![PHPStan Level](https://img.shields.io/badge/PHPStan-Level%206-brightgreen)](https://phpstan.org/)
-[![Coverage](https://img.shields.io/badge/coverage-0%25-red)](https://github.com/username/projectname/actions)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
@@ -29,6 +30,7 @@ The philosophy centers on delivering a clean, extensible architecture that suppo
 - **Composer Scripts**: Unified linting, analysis, and testing shortcuts.
 - **Xdebug + Symfony CLI**: Frictionless DX for debugging and local inspection.
 - **CORS Configuration**: NelmioCorsBundle configured for `localhost:3000` (frontend ready).
+- **CI Guardrails**: Split lint/test workflows, 70% coverage threshold enforcement, and PR coverage comments.
 
 ---
 

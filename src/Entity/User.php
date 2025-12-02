@@ -11,6 +11,7 @@ use App\Entity\Trait\TimestampableTrait;
 use App\Enum\User\Role;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\HasLifecycleCallbacks]
@@ -63,7 +64,7 @@ class User implements UserInterface, IdentifiableInterface, TimestampableInterfa
         $filteredRoles = array_values(array_intersect($normalized, $validRoles));
 
         if ($filteredRoles === []) {
-            throw new \InvalidArgumentException('One or more provided roles are invalid.');
+            throw new InvalidArgumentException('One or more provided roles are invalid.');
         }
 
         if (! in_array(Role::USER->value, $filteredRoles, true)) {
