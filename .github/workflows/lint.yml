@@ -57,3 +57,8 @@ jobs:
         run: vendor/bin/ecs check src tests
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
+      - name: Rector (dry-run)
+        run: vendor/bin/rector process --dry-run
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}

@@ -29,6 +29,7 @@ security:
 
     access_control:
         - { path: ^/api/docs(\.json)?$, roles: PUBLIC_ACCESS }
+        - { path: ^/health$, roles: PUBLIC_ACCESS }
         - { path: ^/api/admin, roles: ROLE_ADMIN }
         - { path: ^/api/users, roles: ROLE_USER }
         - { path: ^/api, roles: ROLE_USER }

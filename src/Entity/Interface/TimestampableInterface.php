@@ -2,14 +2,14 @@
 
 namespace App\Entity\Interface;
 
-use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 
 interface TimestampableInterface
 {
     public function getCreatedAt(): DateTimeImmutable;
 
-    public function getUpdatedAt(): ?DateTime;
+    public function getUpdatedAt(): ?DateTimeInterface;
 
     public function getDeletedAt(): ?DateTimeImmutable;
 

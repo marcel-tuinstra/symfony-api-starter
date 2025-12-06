@@ -1,12 +1,31 @@
+SHELL := /bin/sh
+
+.PHONY: \
+	up down logs php-log clean \
+	db-create db-drop migrate-diff migrate fixtures prepare-test-db \
+	test coverage \
+	lint fix baseline analyse \
+	prepare keycloak-refresh openapi
+
+# --- Environment ---
 up:
 	docker compose up -d --build
 
 down:
 	docker compose down -v
 
+# --- Logs & cleanup ---
 logs:
 	docker compose logs -f
 
+php-log:
+	docker compose logs -f php
+
+clean:
+	docker compose exec php rm -rf var/cache/*
+	docker compose exec php rm -rf vendor/composer/installed.json
+
+# --- Database & fixtures ---
 db-create:
 	docker compose exec php php bin/console doctrine:database:create --if-not-exists
 
@@ -29,12 +48,14 @@ prepare-test-db:
 	#docker compose exec php php bin/console doctrine:migrations:migrate --env=test --no-interaction
 	docker compose exec php php bin/console doctrine:fixtures:load --env=test --no-interaction
 
+# --- Testing ---
 test: prepare-test-db
 	docker compose exec php php bin/phpunit --colors=always
 
 coverage:
 	docker compose exec php php bin/phpunit --coverage-html var/coverage
 
+# --- Linting / QA ---
 lint:
 	docker compose exec php vendor/bin/phpstan analyse
 	docker compose exec php vendor/bin/ecs check src
@@ -58,21 +79,17 @@ baseline:
 analyse:
 	docker compose exec php vendor/bin/phpstan analyse --memory-limit=1G
 
+# --- Documentation ---
+openapi:
+	docker compose exec php sh -c 'php bin/console api:openapi:export > docs/openapi.json'
+
+# --- Project prep ---
 prepare:
 	make down
 	docker compose build --pull
 	make up
 	make db-create migrate fixtures
 	make lint test
-
-# Convenience alias for tailing PHP container logs
-php-log:
-	docker compose logs -f php
-
-# Clean up cache & vendor clutter
-clean:
-	docker compose exec php rm -rf var/cache/*
-	docker compose exec php rm -rf vendor/composer/installed.json
 
 keycloak-refresh:
 	curl -s http://localhost:8081/realms/symfony/protocol/openid-connect/certs \

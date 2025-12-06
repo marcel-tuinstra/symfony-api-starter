@@ -8,6 +8,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ## 🚀 Version Roadmap
 
 ### **v0.0.1 — Foundation Build**
+
 **Goal:** Bootstrapped, minimal, working baseline.
 
 - [x] Symfony 7 + API Platform 4
@@ -23,6 +24,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ---
 
 ### **v0.0.2 — Developer Experience**
+
 **Goal:** Frictionless DX and consistent coding conventions.
 
 - [x] Symfony CLI + Xdebug toggle in Docker
@@ -36,6 +38,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ---
 
 ### **v0.0.3 — Authentication & Secure CRUD**
+
 **Goal:** Enable authenticated, role-based API access with full CRUD on User.
 
 - [x] Keycloak JWT integration (`lexik/jwt-authentication-bundle` or OIDC introspection)
@@ -48,6 +51,7 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ---
 
 ### **v0.0.4 — Observability, Filtering & Environment Maturity**
+
 **Goal:** Full visibility into runtime behaviour and robust, production-like configuration.
 
 - [x] Sentry integration (`sentry/sentry-symfony`)
@@ -69,39 +73,40 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ---
 
 ### **v0.0.5 — Testing, CI/CD & Documentation**
+
 **Goal:** High confidence, automated delivery, and clear developer onboarding.
 
-- [X] PHPUnit + ApiPlatform `ApiTestCase`
-- [X] `FunctionalTestCase` base class
-- [ ] Functional tests for authentication & authorization
-- [X] Unit / Integration / Functional split
-- [X] Coverage enforcement in CI
-- [ ] Faker fixtures loaded for integration tests
-- [ ] PHPStan, Rector, ECS, PHPUnit steps
-- [ ] Full type coverage (no `mixed`)
-- [ ] Doctrine migrations test
-- [ ] Healthcheck endpoint `/health`
-- [ ] Docker healthchecks
-- [ ] `/docs` folder with architecture, CI/CD, testing guides
-- [ ] Auto-generated OpenAPI spec `/docs/openapi.json`
-- [X] Split CI pipelines (lint, tests, coverage artifacts) with reporting
-- [X] README badges (CI, PHPStan, Coverage)
-- [ ] Example Insomnia / Postman collection
+- [x] PHPUnit + ApiPlatform `ApiTestCase`
+- [x] `FunctionalTestCase` base class
+- [x] Functional tests for authentication & authorization
+- [x] Unit / Integration / Functional split
+- [x] Coverage enforcement in CI
+- [x] Faker fixtures loaded for integration tests
+- [x] PHPStan, Rector, ECS, PHPUnit steps
+- [ ] ~~Full type coverage (no `mixed`)~~
+- [x] Doctrine migrations test
+- [x] Healthcheck endpoint `/health`
+- [x] Docker healthchecks
+- [x] `/docs` folder with architecture, CI/CD, testing guides
+- [x] Auto-generated OpenAPI spec `/docs/openapi.json`
+- [x] Split CI pipelines (lint, tests, coverage artifacts) with reporting
+- [x] README badges (CI, PHPStan, Coverage)
+- [x] Setup document
 
 ---
 
 ### **v0.0.6 — CI/CD & Deployment**
+
 **Goal:** Continuous integration and deployment pipeline for automated builds, testing, and staging delivery.
 
-- [ ] GitHub Actions workflow (`ci.yml`)
 - [ ] Coverage artifact upload
 - [ ] Auto-deploy `develop` → staging via SSH
 - [ ] Secrets: `DEPLOY_HOST`, `DEPLOY_PATH`, `DEPLOY_KEY`
-- [ ] (Long-term) Auto-deploy to acceptance environment
 
 ---
 
 ### **v0.1.0 — Developer-Ready Baseline**
+
 **Goal:** Clone-and-build starter for all future APIs.
 
 - [ ] Complete public documentation
@@ -113,12 +118,13 @@ Built for developer velocity, code quality, and modern SaaS backends.
 ---
 
 ### Post-v0.1.0 Milestones
-| Version | Focus |
-|----------|--------|
-| **0.2.0** | Multi-tenant architecture |
-| **0.3.0** | Async processing (Messenger) |
-| **0.4.0** | Mercure / WebSockets |
-| **0.5.0** | i18n / translation |
-| **0.6.0** | K8s readiness |
+
+| Version   | Focus                                      |
+|-----------|--------------------------------------------|
+| **0.2.0** | Multi-tenant architecture                  |
+| **0.3.0** | Async processing (Messenger)               |
+| **0.4.0** | Mercure / WebSockets                       |
+| **0.5.0** | i18n / translation                         |
+| **0.6.0** | K8s readiness                              |
 | **0.7.0** | Observability stack (Prometheus / Grafana) |
-| **1.0.0** | Production-grade, documented starter |
+| **1.0.0** | Production-grade, documented starter       |

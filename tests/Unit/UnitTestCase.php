@@ -25,7 +25,7 @@ abstract class UnitTestCase extends TestCase
     /**
      * @template T of object
      * @param class-string<T> $className
-     * @param array<string, mixed> $configuration
+     * @param array<string, array|bool|float|int|string|null> $configuration
      * @return MockObject&T
      */
     protected function configuredMock(string $className, array $configuration): MockObject

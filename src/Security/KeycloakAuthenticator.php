@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
@@ -20,8 +21,8 @@ class KeycloakAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
         private readonly HttpClientInterface $httpClient,
-        private readonly EntityManagerInterface $em,
-        private readonly UserRepository $users,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly UserRepository $userRepository,
         private readonly string $introspectionUrl,
         private readonly string $clientId,
         private readonly string $clientSecret,
@@ -88,17 +89,17 @@ class KeycloakAuthenticator extends AbstractAuthenticator
         }
 
         $userLoader = function (string $identifier) use ($roles): UserInterface {
-            $user = $this->users->findOneBy([
+            $user = $this->userRepository->findOneBy([
                 'email' => $identifier,
             ]);
 
-            if (! $user) {
+            if (! $user instanceof User) {
                 $user = new User($identifier);
-                $this->em->persist($user);
+                $this->entityManager->persist($user);
             }
 
             $user->setRoles($roles);
-            $this->em->flush();
+            $this->entityManager->flush();
 
             return $user;
         };
@@ -106,7 +107,7 @@ class KeycloakAuthenticator extends AbstractAuthenticator
         return new SelfValidatingPassport(new UserBadge($email, $userLoader));
     }
 
-    public function onAuthenticationSuccess(Request $request, \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token, string $firewallName): ?Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // let the request continue
         return null;
