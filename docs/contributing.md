@@ -6,25 +6,17 @@ Thank you for considering contributing to the Symfony API Starter project! Your 
 
 ## 1. Development Setup
 
-To get started with development, follow these steps:
+For full setup details see `docs/setup.md`. Quick start:
 
 ```bash
-# Clone the repository
 git clone https://github.com/marcel-tuinstra/symfony-api-starter.git
 cd symfony-api-starter
-
-# Install PHP dependencies
-composer install
-
-# Start Docker containers (database, etc.)
 make up
-
-# Run migrations and seeders if applicable
-make migrate
-make seed
+make db-create migrate fixtures
+make keycloak-refresh   # optional: refresh JWKS from local Keycloak
 ```
 
-Make sure you have Docker, PHP, Composer, and Make installed on your machine.
+Make sure you have Docker, PHP 8.3+, Composer, and Make installed.
 
 ---
 
@@ -55,13 +47,10 @@ We enforce code quality using the following tools:
 - **Rector**: Automated refactoring and upgrades.
 - **Easy Coding Standard (ECS)**: Ensures PSR-12 compliance and coding style.
 
-Run these manually before pushing:
+Run these before pushing:
 
 ```bash
-composer grumphp:run
-composer phpstan
-composer rector
-composer ecs
+make lint   # PHPStan + ECS + Rector (dry-run)
 ```
 
 ---
@@ -102,6 +91,8 @@ Run tests and coverage with:
 make test
 make coverage
 ```
+
+See `docs/testing.md` for structure and patterns.
 
 ---
 

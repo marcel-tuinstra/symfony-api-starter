@@ -119,7 +119,7 @@ class KeycloakService
     /**
      * Fetch full Keycloak role representation (ID + name).
      *
-     * @return array<string, mixed>|null
+     * @return array{id: string, name: string}|null
      */
     private function getRoleRepresentation(string $token, string $roleName): ?array
     {

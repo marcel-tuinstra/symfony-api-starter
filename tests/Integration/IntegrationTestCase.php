@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
+use App\Tests\Fixture\FakerFixturesTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -11,12 +12,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class IntegrationTestCase extends KernelTestCase
 {
+    use FakerFixturesTrait;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->configureDatabaseUrl();
         static::bootKernel();
         $this->resetDatabaseSchema();
+        $this->loadFakerFixtures();
     }
 
     protected function container(): ContainerInterface

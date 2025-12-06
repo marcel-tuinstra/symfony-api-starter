@@ -28,7 +28,10 @@ final class UserInput
     #[Map(target: 'roles', if: [self::class, 'isNotNull'])]
     public ?array $roles = null;
 
-    public static function isNotNull(mixed $value): bool
+    /**
+     * @param null|bool|int|float|string|array<array-key, mixed>|object $value
+     */
+    public static function isNotNull(null|bool|int|float|string|array|object $value): bool
     {
         return $value !== null;
     }

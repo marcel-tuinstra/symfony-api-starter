@@ -16,7 +16,7 @@ class SoftDeleteProcessorTest extends UnitTestCase
     public function testItSoftDeletesAndMapsResource(): void
     {
         // Arrange
-        $entity = new class() implements TimestampedResourceInterface {
+        $entity = new class() implements TimestampedResourceInterface, \App\Entity\Interface\TimestampableInterface {
             public bool $deleted = false;
 
             public function softDelete(): void
@@ -24,9 +24,14 @@ class SoftDeleteProcessorTest extends UnitTestCase
                 $this->deleted = true;
             }
 
-            public function getCreatedAt(): ?\DateTimeImmutable
+            public function isDeleted(): bool
             {
-                return null;
+                return $this->deleted;
+            }
+
+            public function getCreatedAt(): \DateTimeImmutable
+            {
+                return new \DateTimeImmutable();
             }
 
             public function getUpdatedAt(): ?\DateTimeInterface

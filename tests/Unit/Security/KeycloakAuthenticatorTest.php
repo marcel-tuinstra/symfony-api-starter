@@ -103,7 +103,7 @@ class KeycloakAuthenticatorTest extends UnitTestCase
     }
 
     /**
-     * @return iterable<string, array{array<string,mixed>, string}>
+     * @return iterable<string, array{array{active?: bool, email?: string, preferred_username?: string, realm_access?: array{roles?: array<int, string>}}, string}>
      */
     public static function provideInvalidTokens(): iterable
     {
