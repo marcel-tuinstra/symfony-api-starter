@@ -10,12 +10,12 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class KeycloakService
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private LoggerInterface $logger,
-        private string $keycloakBaseUrl,
-        private string $keycloakRealm,
-        private string $keycloakClientId,
-        private string $keycloakClientSecret
+        private readonly HttpClientInterface $httpClient,
+        private readonly LoggerInterface $logger,
+        private readonly string $keycloakBaseUrl,
+        private readonly string $keycloakRealm,
+        private readonly string $keycloakClientId,
+        private readonly string $keycloakClientSecret
     ) {
     }
 
@@ -71,8 +71,8 @@ class KeycloakService
             }
 
             // 2) Assign roles
-            foreach ($roles as $roleName) {
-                $this->assignRole($token, $userId, $roleName);
+            foreach ($roles as $role) {
+                $this->assignRole($token, $userId, $role);
             }
         } catch (\Throwable $e) {
             $this->logger->error('Keycloak sync failed: ' . $e->getMessage(), [

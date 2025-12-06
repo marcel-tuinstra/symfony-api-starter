@@ -24,7 +24,7 @@ final readonly class ResourceCollectionProvider implements ProviderInterface
     ) {
     }
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): array
     {
         $targetClass = $operation->getClass();
         $output = $operation->getOutput();

@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Map(target: User::class)]
 final class UserInput
 {
-    private const ROLE_CHOICES = [Role::USER->value, Role::ADMIN->value];
+    private const array ROLE_CHOICES = [Role::USER->value, Role::ADMIN->value];
 
     #[Assert\NotBlank(groups: ['user:create'])]
     #[Assert\Email(groups: ['user:create', 'user:update'])]

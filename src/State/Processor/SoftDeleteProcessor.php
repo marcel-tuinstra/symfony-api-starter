@@ -39,7 +39,7 @@ readonly class SoftDeleteProcessor implements ProcessorInterface
             throw new InvalidArgumentException(sprintf(
                 'SoftDeleteProcessor expected %s, got %s',
                 TimestampedResourceInterface::class,
-                is_object($resource) ? $resource::class : gettype($resource)
+                get_debug_type($resource)
             ));
         }
 

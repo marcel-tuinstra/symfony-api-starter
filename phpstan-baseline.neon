@@ -13,12 +13,6 @@ parameters:
 			path: src/Api/Resource/UserResource.php
 
 		-
-			message: '#^Call to function is_object\(\) with object will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/State/Processor/SoftDeleteProcessor.php
-
-		-
 			message: '#^Class App\\State\\Processor\\SoftDeleteProcessor implements generic interface ApiPlatform\\State\\ProcessorInterface but does not specify its types\: T1, T2$#'
 			identifier: missingType.generics
 			count: 1
@@ -37,7 +31,7 @@ parameters:
 			path: src/State/Processor/SoftDeleteProcessor.php
 
 		-
-			message: '#^Method App\\State\\Provider\\ResourceCollectionProvider\:\:provide\(\) never returns null so it can be removed from the return type\.$#'
-			identifier: return.unusedType
+			message: '#^Method App\\State\\Provider\\ResourceCollectionProvider\:\:provide\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/State/Provider/ResourceCollectionProvider.php

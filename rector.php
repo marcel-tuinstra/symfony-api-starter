@@ -10,7 +10,6 @@ use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
         __DIR__ . '/src',
-        __DIR__ . '/tests',
     ]);
     $rectorConfig->disableParallel();
 
