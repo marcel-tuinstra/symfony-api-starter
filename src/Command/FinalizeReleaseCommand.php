@@ -35,11 +35,11 @@ class FinalizeReleaseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $symfonyStyle = new SymfonyStyle($input, $output);
         $version = (string) $input->getOption('version');
 
         if ($version === '') {
-            $io->error('Version is required (e.g., --version=v0.1.1).');
+            $symfonyStyle->error('Version is required (e.g., --version=v0.1.1).');
 
             return Command::FAILURE;
         }
@@ -47,12 +47,12 @@ class FinalizeReleaseCommand extends Command
         try {
             $this->releaseManager->finalizeChangelog($version);
         } catch (RuntimeException $exception) {
-            $io->error($exception->getMessage());
+            $symfonyStyle->error($exception->getMessage());
 
             return Command::FAILURE;
         }
 
-        $io->success(sprintf('Changelog finalized for %s. Remember to commit and tag.', $version));
+        $symfonyStyle->success(sprintf('Changelog finalized for %s. Remember to commit and tag.', $version));
 
         return Command::SUCCESS;
     }

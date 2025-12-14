@@ -36,7 +36,7 @@ class TestMailCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $symfonyStyle = new SymfonyStyle($input, $output);
         $recipient = $input->getOption('to');
 
         if (! is_string($recipient) || trim($recipient) === '') {
@@ -45,7 +45,7 @@ class TestMailCommand extends Command
 
         $this->testMailer->send($recipient);
 
-        $io->success(sprintf('Test email sent to %s (check Mailpit UI).', $recipient));
+        $symfonyStyle->success(sprintf('Test email sent to %s (check Mailpit UI).', $recipient));
 
         return Command::SUCCESS;
     }

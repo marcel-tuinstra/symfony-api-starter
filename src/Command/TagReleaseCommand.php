@@ -30,25 +30,24 @@ class TagReleaseCommand extends Command
             'message',
             null,
             InputOption::VALUE_REQUIRED,
-            'Tag message',
-            null
+            'Tag message'
         );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $symfonyStyle = new SymfonyStyle($input, $output);
         $version = (string) $input->getOption('version');
         $message = $input->getOption('message') ?? sprintf('Release %s', $version);
 
         if ($version === '') {
-            $io->error('Version is required (e.g., --version=v0.1.1).');
+            $symfonyStyle->error('Version is required (e.g., --version=v0.1.1).');
 
             return Command::FAILURE;
         }
 
         if (! $this->isCleanWorkingTree()) {
-            $io->error('Working tree is not clean. Commit or stash changes before tagging.');
+            $symfonyStyle->error('Working tree is not clean. Commit or stash changes before tagging.');
 
             return Command::FAILURE;
         }
@@ -57,12 +56,12 @@ class TagReleaseCommand extends Command
         $process->run();
 
         if (! $process->isSuccessful()) {
-            $io->error(trim($process->getErrorOutput()) ?: 'Failed to create tag.');
+            $symfonyStyle->error(trim($process->getErrorOutput()) ?: 'Failed to create tag.');
 
             return Command::FAILURE;
         }
 
-        $io->success(sprintf('Created tag %s. Push with: git push origin %s', $version, $version));
+        $symfonyStyle->success(sprintf('Created tag %s. Push with: git push origin %s', $version, $version));
 
         return Command::SUCCESS;
     }

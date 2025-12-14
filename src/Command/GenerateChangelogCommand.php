@@ -38,7 +38,7 @@ class GenerateChangelogCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $symfonyStyle = new SymfonyStyle($input, $output);
         $since = $input->getOption('since');
 
         $existingChangelog = null;
@@ -51,14 +51,14 @@ class GenerateChangelogCommand extends Command
         try {
             $changelog = $this->changelogGenerator->generate($since, $existingChangelog);
         } catch (RuntimeException $exception) {
-            $io->error($exception->getMessage());
+            $symfonyStyle->error($exception->getMessage());
 
             return Command::FAILURE;
         }
 
         $this->writeFile($changelog);
 
-        $io->success('Changelog written to CHANGELOG.md');
+        $symfonyStyle->success('Changelog written to CHANGELOG.md');
 
         return Command::SUCCESS;
     }

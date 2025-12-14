@@ -88,8 +88,8 @@ class ChangelogGenerator
     {
         $sections = [];
 
-        foreach ($commitMessages as $message) {
-            $parsed = $this->parseCommitMessage($message);
+        foreach ($commitMessages as $commitMessage) {
+            $parsed = $this->parseCommitMessage($commitMessage);
             $category = $this->mapCategory($parsed['type']);
             $sections[$category][] = $parsed['message'];
         }

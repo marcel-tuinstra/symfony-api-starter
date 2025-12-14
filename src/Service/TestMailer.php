@@ -18,7 +18,7 @@ class TestMailer
 
     public function send(string $toAddress): void
     {
-        $email = (new TemplatedEmail())
+        $templatedEmail = (new TemplatedEmail())
             ->from(new Address($this->fromAddress, 'Symfony API Starter'))
             ->to($toAddress)
             ->subject('Test email from Symfony API Starter')
@@ -27,6 +27,6 @@ class TestMailer
                 'toAddress' => $toAddress,
             ]);
 
-        $this->mailer->send($email);
+        $this->mailer->send($templatedEmail);
     }
 }
