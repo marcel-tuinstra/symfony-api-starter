@@ -50,28 +50,20 @@ make test
 
 Common commands: `make lint`, `make coverage`, `make openapi`, `make down`.
 
-## Documentation
+## Documentation 📚
+- Docs index: `docs/index.md` (all guides)
 - Setup & env: `docs/setup.md`
 - Testing: `docs/testing.md`
 - CI/CD: `docs/ci-cd.md`
 - Architecture overview: `docs/architecture.md`
 - Roadmap: `docs/roadmap.md`
+- Changelog workflow: `docs/changelog.md`
+- Patterns (mailer, processors): `docs/patterns.md`
 
 ## Endpoints & Auth
 - API docs (Swagger UI): `/api/docs` (JSON: `/api/docs.json`)
 - Healthcheck: `/health`
 - Auth: Bearer JWT issued by Keycloak (see setup guide for realm/client configuration).
-
----
-
-## Documentation 📚
-
-Explore detailed guides and references:
-
-- [Architecture](docs/architecture.md)
-- [Testing](docs/testing.md)
-- [CI/CD Pipeline](docs/ci-cd.md)
-- [Roadmap](docs/roadmap.md)
 
 ---
 

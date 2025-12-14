@@ -14,4 +14,10 @@ return static function (ECSConfig $ecs): void {
         SetList::PSR_12,
         SetList::CLEAN_CODE,
     ]);
+
+    // Enforce PSR-12 negation spacing (`if (!foo)` instead of `if (! foo)`)
+    $ecs->skip([
+        PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer::class,
+        PhpCsFixer\Fixer\Operator\UnaryOperatorSpacesFixer::class,
+    ]);
 };

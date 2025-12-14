@@ -6,6 +6,7 @@ parameters:
         phpstan:
             configuration: phpstan.neon
             level: 6
+            memory_limit: 512M
             triggered_by: [php]
         ecs:
             config: ecs.php
