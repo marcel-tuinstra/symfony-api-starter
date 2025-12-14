@@ -110,16 +110,10 @@
             "php bin/console app:release:tag --version=${VERSION:-v0.0.0}"
         ],
         "release": [
-            "composer release:prepare",
-            "composer release:tag"
+            "sh -c 'VERSION=${VERSION:-v0.0.0} && composer release:prepare && composer release:tag'"
         ],
         "release:publish": [
-            "git checkout main",
-            "git merge --ff-only develop",
-            "php bin/console app:release:tag --version=${VERSION:-v0.0.0}",
-            "git push origin main",
-            "git push origin ${VERSION:-v0.0.0}",
-            "git checkout develop"
+            "sh -c 'VERSION=${VERSION:-v0.0.0} && git checkout main && git merge --ff-only develop && php bin/console app:release:tag --version=$VERSION && git push origin main && git push origin $VERSION && git checkout develop'"
         ],
         "prepare": [
             "composer install --no-interaction",
