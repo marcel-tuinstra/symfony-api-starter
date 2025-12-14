@@ -20,10 +20,8 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://symfony:symfony@db:5432/symfony?serverVersion=15&charset=utf8}
       MAILER_DSN: ${MAILER_DSN:-smtp://mailpit:1025}
       CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-http://localhost:3000}
-      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:8080}
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:8088}
       APP_VERSION: ${APP_VERSION:-dev}
-#    ports:
-#      - "8080:80"
     expose:
       - "9000"
     healthcheck:
@@ -42,7 +40,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "55432:5432"
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "symfony"]
       interval: 10s
@@ -53,8 +51,8 @@ services:
     image: axllent/mailpit:latest
     container_name: symfony_mailpit
     ports:
-      - "8025:8025"
-      - "1025:1025"
+      - "8026:8025"
+      - "1026:1025"
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "1025"]
       interval: 10s
@@ -83,7 +81,7 @@ services:
       - ./docker/keycloak:/opt/keycloak/data/import
       - ./../keycloak-data:/opt/keycloak/data
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      test: ["CMD", "curl", "-f", "http://localhost:8180"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -105,7 +103,7 @@ services:
     depends_on:
       - php
     ports:
-      - "8080:80"
+      - "8088:80"
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost"]
       interval: 10s

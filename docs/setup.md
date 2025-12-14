@@ -32,6 +32,12 @@ Key .env variables to review:
 make up
 ```
 Services: PHP-FPM, Postgres, Keycloak, Mailpit, Caddy. Stop with `make down -v`.
+Default host ports to avoid common clashes:
+- Caddy (API): http://localhost:8088
+- Postgres: 55432
+- Keycloak: 8180
+- Mailpit: SMTP 1026, UI 8026
+Adjust `compose.yaml` if you need different mappings.
 
 ## 3) Database & Fixtures
 ```bash
@@ -41,7 +47,7 @@ make db-create migrate fixtures
 ## 4) Keycloak configuration
 Assumes the bundled Keycloak container on port 8180 with realm import from `docker/keycloak`.
 - Realm: `symfony` (adjust to match `KEYCLOAK_REALM`)
-- Client: set `KEYCLOAK_CLIENT_ID` / `KEYCLOAK_CLIENT_SECRET`; enable `service accounts` and `client credentials` for introspection.
+- Client: set `KEYCLOAK_CLIENT_ID` / `KEYCLOAK_CLIENT_SECRET`; enable `service accounts` and `client credentials` for introspection. Default local client secret: `8tbZMSEvrqc2Up5GYrWdrONPTHiTzBn2`.
 - Roles: `ROLE_USER`, `ROLE_ADMIN` as realm roles.
 - Service account roles: on the client, assign `ROLE_USER` (and `ROLE_ADMIN` if needed) to the Service Account Roles tab so client-credential tokens include the API roles out of the box.
 - JWKS refresh: after realm changes run `make keycloak-refresh` to update `config/jwt/keycloak_public.pem`.
