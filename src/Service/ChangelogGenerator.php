@@ -237,7 +237,7 @@ class ChangelogGenerator
      */
     private function runGitCommand(string $command): array
     {
-        $fullCommand = sprintf('cd %s && %s', escapeshellarg($this->projectDir), $command);
+        $fullCommand = sprintf('cd %s && %s 2>/dev/null', escapeshellarg($this->projectDir), $command);
         $output = [];
         $exitCode = 0;
 
