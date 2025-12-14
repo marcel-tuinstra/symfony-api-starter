@@ -12,11 +12,7 @@ concurrency:
 
 jobs:
   deploy:
-    env:
-      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-      DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-    if: ${{ env.DEPLOY_HOST != '' && env.DEPLOY_PATH != '' && env.DEPLOY_KEY != '' }}
+    if: ${{ secrets.DEPLOY_HOST != '' && secrets.DEPLOY_PATH != '' && secrets.DEPLOY_KEY != '' }}
     runs-on: ubuntu-latest
     environment: staging
 
