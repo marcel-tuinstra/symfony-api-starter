@@ -33,7 +33,9 @@ class FinalizeReleaseCommandTest extends UnitTestCase
             ->with('v1.2.3');
 
         // Act
-        $exitCode = $tester->execute(['--version' => 'v1.2.3']);
+        $exitCode = $tester->execute([
+            '--version' => 'v1.2.3',
+        ]);
 
         // Assert
         self::assertSame(0, $exitCode);
@@ -52,7 +54,9 @@ class FinalizeReleaseCommandTest extends UnitTestCase
             ->willThrowException(new RuntimeException('fail'));
 
         // Act
-        $exitCode = $tester->execute(['--version' => 'v1.2.3']);
+        $exitCode = $tester->execute([
+            '--version' => 'v1.2.3',
+        ]);
 
         // Assert
         self::assertSame(1, $exitCode);

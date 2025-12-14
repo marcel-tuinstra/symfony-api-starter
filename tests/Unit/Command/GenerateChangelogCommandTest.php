@@ -14,6 +14,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 class GenerateChangelogCommandTest extends UnitTestCase
 {
     private ChangelogGenerator&MockObject $generator;
+
     private string $tempDir;
 
     protected function setUp(): void
