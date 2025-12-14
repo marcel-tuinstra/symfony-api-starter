@@ -20,30 +20,7 @@ The command writes to `CHANGELOG.md` in the project root.
 
 ## Finalize & tag releases
 
-- Promote `[Unreleased]` to a versioned section and reset `[Unreleased]`:
-
-```bash
-VERSION=v0.1.1 composer release:prepare
-```
-
-- Create a git tag (fails if the working tree is dirty):
-
-```bash
-VERSION=v0.1.1 composer release:tag
-git push origin v0.1.1   # manual push
-```
-
-- One-shot convenience (prepare + tag):
-
-```bash
-VERSION=v0.1.1 composer release
-```
-
-- Publish flow (expects a clean tree with finalized changelog already committed):
-
-```bash
-VERSION=v0.1.1 composer release:publish
-```
+- To finalize a release, see `docs/release.md` for the manual flow (finalize changelog, merge `develop` → `main`, tag, push).
 
 ## How it works
 

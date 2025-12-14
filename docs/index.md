@@ -8,6 +8,7 @@ Use this starter as a drop-in baseline for new APIs. Below is the entry point to
 - Testing strategy: `docs/testing.md`
 - CI/CD workflows: `docs/ci-cd.md`
 - Changelog process: `docs/changelog.md`
+- Release flow: `docs/release.md`
 - Patterns (mailer & processors): `docs/patterns.md`
 - Roadmap: `docs/roadmap.md`
 - Contributing guide: `docs/contributing.md`

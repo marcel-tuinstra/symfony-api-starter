@@ -102,19 +102,6 @@
         "test": [
             "make test"
         ],
-        "release:prepare": [
-            "composer changelog",
-            "php bin/console app:release:finalize --version=${VERSION:-v0.0.0}"
-        ],
-        "release:tag": [
-            "php bin/console app:release:tag --version=${VERSION:-v0.0.0}"
-        ],
-        "release": [
-            "sh -c 'VERSION=${VERSION:-v0.0.0} && composer release:prepare && composer release:tag'"
-        ],
-        "release:publish": [
-            "sh -c 'VERSION=${VERSION:-v0.0.0} && git checkout main && git merge --ff-only develop && php bin/console app:release:tag --version=$VERSION && git push origin main && git push origin $VERSION && git checkout develop'"
-        ],
         "prepare": [
             "composer install --no-interaction",
             "make lint"
