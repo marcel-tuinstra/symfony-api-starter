@@ -47,10 +47,6 @@ class MigrationsTest extends KernelTestCase
 
     private function configureDatabaseUrl(): void
     {
-        if (! empty($_ENV['DATABASE_URL'])) {
-            return;
-        }
-
         $projectDir = dirname(__DIR__, 2);
         $databasePath = $projectDir . '/var/cache/test/app_migrations.db';
         $this->ensureDirectoryExists($databasePath);

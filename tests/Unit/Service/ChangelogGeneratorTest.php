@@ -13,8 +13,12 @@ class ChangelogGeneratorTest extends UnitTestCase
     public function testGenerateAppendsExistingReleases(): void
     {
         $projectDir = $this->createTempGitRepo([
-            ['message' => 'feat: add feature'],
-            ['message' => 'docs: add docs'],
+            [
+                'message' => 'feat: add feature',
+            ],
+            [
+                'message' => 'docs: add docs',
+            ],
         ]);
 
         $existing = <<<TXT
@@ -42,7 +46,10 @@ class ChangelogGeneratorTest extends UnitTestCase
 
     public function testGenerateThrowsWhenGitFails(): void
     {
-        $generator = new ChangelogGenerator('/non-existent-path');
+        $missingRepoDir = sys_get_temp_dir() . '/changelog_missing_' . uniqid('', true);
+        mkdir($missingRepoDir, 0777, true);
+
+        $generator = new ChangelogGenerator($missingRepoDir);
 
         $this->expectException(RuntimeException::class);
         $generator->generate();
