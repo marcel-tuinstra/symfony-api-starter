@@ -96,7 +96,18 @@ See `docs/testing.md` for structure and patterns.
 
 ---
 
-## 6. Pull Request Guidelines
+## 6. Changelog
+
+Generate or refresh `CHANGELOG.md` before tagging a release:
+
+```bash
+composer changelog        # uses the latest tag as the baseline
+composer changelog -- --since v0.0.5   # custom start point
+```
+
+---
+
+## 7. Pull Request Guidelines
 
 Before submitting a PR, please:
 
@@ -109,7 +120,7 @@ Before submitting a PR, please:
 
 ---
 
-## 7. Reporting Issues
+## 8. Reporting Issues
 
 When reporting bugs or requesting features, please include:
 
@@ -121,7 +132,7 @@ When reporting bugs or requesting features, please include:
 
 ---
 
-## 8. Style & Conventions
+## 9. Style & Conventions
 
 We adhere to:
 

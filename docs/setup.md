@@ -39,6 +39,12 @@ Default host ports to avoid common clashes:
 - Mailpit: SMTP 1026, UI 8026
 Adjust `compose.yaml` if you need different mappings.
 
+### Mailpit (local email)
+- Mailer transport (inside Docker): `MAILER_DSN=smtp://mailpit:1025` (this is the default in `compose.yaml`).
+- If running Symfony locally without Docker, point to the exposed port: `MAILER_DSN=smtp://localhost:1026`.
+- Inbox UI: http://localhost:8026 — useful for manual email flows during development.
+- Send a test email to Mailpit: `php bin/console app:mail:test --to you@example.com` (default recipient `dev@example.com`).
+
 ## 3) Database & Fixtures
 ```bash
 make db-create migrate fixtures
