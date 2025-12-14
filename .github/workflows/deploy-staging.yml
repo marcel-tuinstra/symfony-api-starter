@@ -12,7 +12,11 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ secrets.DEPLOY_HOST != '' && secrets.DEPLOY_PATH != '' && secrets.DEPLOY_KEY != '' }}
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+    if: ${{ env.DEPLOY_HOST != '' && env.DEPLOY_PATH != '' && env.DEPLOY_KEY != '' }}
     runs-on: ubuntu-latest
     environment: staging
 
@@ -26,9 +30,6 @@ jobs:
           printf '%s' "${DEPLOY_KEY}" > ~/.ssh/id_rsa
           DEPLOY_HOSTNAME=${DEPLOY_HOST#*@}
           ssh-keyscan -H "$DEPLOY_HOSTNAME" >> ~/.ssh/known_hosts
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
 
       - name: Sync release to staging
         run: |
@@ -38,13 +39,7 @@ jobs:
             --exclude 'var/coverage' \
             --exclude '.github' \
             ./ "${DEPLOY_HOST}:${DEPLOY_PATH}/"
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
 
       - name: Install dependencies on remote host
         run: |
           ssh "${DEPLOY_HOST}" "cd '${DEPLOY_PATH}' && composer install --no-dev --optimize-autoloader --no-interaction"
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
