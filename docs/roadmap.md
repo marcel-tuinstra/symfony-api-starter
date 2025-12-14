@@ -99,9 +99,10 @@ Built for developer velocity, code quality, and modern SaaS backends.
 
 **Goal:** Continuous integration and deployment pipeline for automated builds, testing, and staging delivery.
 
-- [ ] Coverage artifact upload
-- [ ] Auto-deploy `develop` → staging via SSH
-- [ ] Secrets: `DEPLOY_HOST`, `DEPLOY_PATH`, `DEPLOY_KEY`
+- [x] Coverage artifact upload
+- [x] Auto-deploy `develop` → staging via SSH
+- [x] Secrets: `DEPLOY_HOST`, `DEPLOY_PATH`, `DEPLOY_KEY`
+  - Note: the deploy workflow is included for downstream adopters; this starter does not set staging secrets or target a server by default.
 
 ---
 
