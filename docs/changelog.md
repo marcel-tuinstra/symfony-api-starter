@@ -39,13 +39,7 @@ git push origin v0.1.1   # manual push
 VERSION=v0.1.1 composer release
 ```
 
-- Push the tag (optional helper):
-
-```bash
-VERSION=v0.1.1 composer release:push   # equivalent to git push origin v0.1.1
-```
-
-- Full publish flow (prepare + tag + push):
+- Full publish flow (prepare + fast-forward main, tag on main, push):
 
 ```bash
 VERSION=v0.1.1 composer release:publish
