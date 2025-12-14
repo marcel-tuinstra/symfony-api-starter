@@ -1,46 +1,52 @@
 {
-    "realm": "symfony",
-    "enabled": true,
-    "attributes": {
-        "access.token.lifespan": "43200",
-        "sso.session.idle.timeout": "43200",
-        "sso.session.max.lifespan": "86400",
-        "client.session.idle.timeout": "43200",
-        "client.session.max.lifespan": "86400",
-        "offline.session.idle.timeout": "2592000",
-        "offline.session.max.lifespan": "5184000"
-    },
-    "clients": [
-        {
-            "clientId": "symfony-api",
-            "rootUrl": "http://localhost:8080",
-            "redirectUris": ["http://localhost:8080/*"],
-            "publicClient": true,
-            "standardFlowEnabled": true,
-            "directAccessGrantsEnabled": true,
-            "protocol": "openid-connect",
-            "defaultClientScopes": ["web-origins", "role_list", "profile", "email"],
-            "optionalClientScopes": ["address", "phone", "offline_access"]
-        }
-    ],
-    "roles": {
-        "realm": [
-            { "name": "ROLE_USER" },
-            { "name": "ROLE_ADMIN" }
-        ]
-    },
-    "users": [
-        {
-            "username": "admin",
-            "enabled": true,
-            "emailVerified": true,
-            "firstName": "Admin",
-            "lastName": "User",
-            "email": "admin@example.com",
-            "credentials": [
-                { "type": "password", "value": "admin", "temporary": false }
-            ],
-            "realmRoles": ["ROLE_ADMIN"]
-        }
+  "realm": "symfony",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      { "name": "ROLE_USER" },
+      { "name": "ROLE_ADMIN" }
     ]
+  },
+  "clients": [
+    {
+      "clientId": "symfony-api",
+      "name": "Symfony API Starter",
+      "description": "Default API client for local development",
+      "rootUrl": "http://localhost:8088",
+      "redirectUris": ["http://localhost:8088/*"],
+      "webOrigins": ["http://localhost:8088"],
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "8tbZMSEvrqc2Up5GYrWdrONPTHiTzBn2",
+      "protocol": "openid-connect",
+      "defaultClientScopes": ["web-origins", "roles", "profile", "email", "acr"],
+      "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@example.com",
+      "credentials": [
+        { "type": "password", "value": "admin", "temporary": false }
+      ],
+      "realmRoles": ["ROLE_ADMIN"]
+    },
+    {
+      "username": "service-account-symfony-api",
+      "enabled": true,
+      "emailVerified": true,
+      "serviceAccountClientId": "symfony-api",
+      "realmRoles": ["ROLE_USER", "ROLE_ADMIN"]
+    }
+  ]
 }

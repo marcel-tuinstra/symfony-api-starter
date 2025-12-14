@@ -1,0 +1,50 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-staging-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ secrets.DEPLOY_HOST != '' && secrets.DEPLOY_PATH != '' && secrets.DEPLOY_KEY != '' }}
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare SSH key
+        run: |
+          install -m 600 /dev/null ~/.ssh/id_rsa
+          printf '%s' "${DEPLOY_KEY}" > ~/.ssh/id_rsa
+          DEPLOY_HOSTNAME=${DEPLOY_HOST#*@}
+          ssh-keyscan -H "$DEPLOY_HOSTNAME" >> ~/.ssh/known_hosts
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Sync release to staging
+        run: |
+          rsync -az --delete \
+            --exclude '.git' \
+            --exclude 'var/cache' \
+            --exclude 'var/coverage' \
+            --exclude '.github' \
+            ./ "${DEPLOY_HOST}:${DEPLOY_PATH}/"
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+
+      - name: Install dependencies on remote host
+        run: |
+          ssh "${DEPLOY_HOST}" "cd '${DEPLOY_PATH}' && composer install --no-dev --optimize-autoloader --no-interaction"
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}

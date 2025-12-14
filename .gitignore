@@ -1,5 +1,7 @@
 .idea
 
+.DS_Store
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -24,3 +26,5 @@ phpstan.neon
 /keycloak-db
 /config/jwt
 ###< keycloak ###
+
+tests/var/
