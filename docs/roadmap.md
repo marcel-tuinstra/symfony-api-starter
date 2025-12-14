@@ -110,11 +110,11 @@ Built for developer velocity, code quality, and modern SaaS backends.
 
 **Goal:** Clone-and-build starter for all future APIs.
 
-- [ ] Complete public documentation
+- [x] Complete public documentation
 - [ ] Version tags & semantic release
-- [ ] `CHANGELOG.md` generation
-- [ ] Example Mailer & Processor patterns
-- [ ] Ready for extension via new ApiResources
+- [x] `CHANGELOG.md` generation
+- [x] Example Mailer & Processor patterns
+- [x] Ready for extension via new ApiResources
 
 ---
 
@@ -122,10 +122,11 @@ Built for developer velocity, code quality, and modern SaaS backends.
 
 | Version   | Focus                                      |
 |-----------|--------------------------------------------|
-| **0.2.0** | Multi-tenant architecture                  |
+| **0.2.0** | Security hardening & API versioning        |
 | **0.3.0** | Async processing (Messenger)               |
-| **0.4.0** | Mercure / WebSockets                       |
-| **0.5.0** | i18n / translation                         |
-| **0.6.0** | K8s readiness                              |
-| **0.7.0** | Observability stack (Prometheus / Grafana) |
+| **0.4.0** | Observability stack (Prometheus / Grafana) |
+| **0.5.0** | Mercure / WebSockets                       |
+| **0.6.0** | i18n / translation                         |
+| **0.7.0** | Multi-tenancy playbook (opt-in patterns)   |
+| **0.8.0** | K8s readiness                              |
 | **1.0.0** | Production-grade, documented starter       |

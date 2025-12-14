@@ -28,6 +28,7 @@
         "symfony/http-client": "7.4.*",
         "symfony/maker-bundle": "^1.65.1",
         "symfony/monolog-bundle": "^3.11",
+        "symfony/mailer": "7.4.*",
         "symfony/object-mapper": "7.4.*",
         "symfony/property-access": "7.4.*",
         "symfony/property-info": "7.4.*",
@@ -95,8 +96,31 @@
         "analyse": [
             "make lint"
         ],
+        "changelog": [
+            "php bin/console app:changelog:generate"
+        ],
         "test": [
             "make test"
+        ],
+        "release:prepare": [
+            "composer changelog",
+            "php bin/console app:release:finalize --version=${VERSION:-v0.0.0}"
+        ],
+        "release:tag": [
+            "php bin/console app:release:tag --version=${VERSION:-v0.0.0}"
+        ],
+        "release": [
+            "composer release:prepare",
+            "composer release:tag"
+        ],
+        "release:publish": [
+            "composer release:prepare",
+            "git checkout main",
+            "git merge --ff-only develop",
+            "php bin/console app:release:tag --version=${VERSION:-v0.0.0}",
+            "git push origin main",
+            "git push origin ${VERSION:-v0.0.0}",
+            "git checkout develop"
         ],
         "prepare": [
             "composer install --no-interaction",

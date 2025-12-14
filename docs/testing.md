@@ -19,6 +19,11 @@ How we structure and run tests in the starter.
 - Coverage (HTML): `make coverage` → `var/coverage`
 - Per suite: `vendor/bin/phpunit --testsuite Unit|Integration|Functional`
 
+## Mailpit for manual email checks
+- The stack includes Mailpit (SMTP `localhost:1026`, UI `http://localhost:8026`); inside Docker use host `mailpit:1025`.
+- Use it for manual verification of email flows; keep automated tests self-contained (prefer assertions on mailer test transports or domain events rather than relying on Mailpit).
+- Quick sanity check: `php bin/console app:mail:test --to you@example.com` (appears in Mailpit UI).
+
 ## CI expectations
 - GitHub Actions `tests.yml` runs all suites on SQLite.
 - Coverage gate: 70% minimum (build fails below).
