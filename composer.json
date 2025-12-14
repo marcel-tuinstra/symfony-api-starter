@@ -114,7 +114,6 @@
             "composer release:tag"
         ],
         "release:publish": [
-            "composer release:prepare",
             "git checkout main",
             "git merge --ff-only develop",
             "php bin/console app:release:tag --version=${VERSION:-v0.0.0}",

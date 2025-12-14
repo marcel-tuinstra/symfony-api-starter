@@ -39,7 +39,7 @@ git push origin v0.1.1   # manual push
 VERSION=v0.1.1 composer release
 ```
 
-- Full publish flow (prepare + fast-forward main, tag on main, push):
+- Publish flow (expects a clean tree with finalized changelog already committed):
 
 ```bash
 VERSION=v0.1.1 composer release:publish
